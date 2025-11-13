@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartFactoryERP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e899da80973de4ac415d62ac9ac63f8cfee8f83c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartFactoryERP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartFactoryERP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

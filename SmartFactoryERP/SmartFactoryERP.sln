@@ -1,9 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP", "SmartFactoryERP\SmartFactoryERP.csproj", "{86A4D510-9298-4F61-88D2-80B6DE26B13E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{233A298F-F31A-4D9B-8E19-1C8EF53631DB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{85E42D8A-0C3E-4708-9F8F-C21F98D2F0EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{60148123-A637-4761-8987-0B317AC8AB57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E982D262-3CC2-46E0-875A-26D0098483E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{AB587AF3-9658-4645-90C9-F453AB978D6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Domain", "SmartFactoryERP.Domain\SmartFactoryERP.Domain.csproj", "{50C5F870-FAFC-425C-BFD2-1FF373608438}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Application", "SmartFactoryERP.Application\SmartFactoryERP.Application.csproj", "{94A64649-256E-4AB0-AF39-EEC33F795769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Infrastructure", "SmartFactoryERP.Infrastructure\SmartFactoryERP.Infrastructure.csproj", "{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Persistence", "SmartFactoryERP.Persistence\SmartFactoryERP.Persistence.csproj", "{0D37CD51-20E8-4B18-A9D2-D4F52193865C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.WebAPI", "SmartFactoryERP.WebAPI\SmartFactoryERP.WebAPI.csproj", "{4148BA89-6371-4574-A18C-361EF260F472}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +31,39 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{86A4D510-9298-4F61-88D2-80B6DE26B13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86A4D510-9298-4F61-88D2-80B6DE26B13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86A4D510-9298-4F61-88D2-80B6DE26B13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86A4D510-9298-4F61-88D2-80B6DE26B13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50C5F870-FAFC-425C-BFD2-1FF373608438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50C5F870-FAFC-425C-BFD2-1FF373608438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50C5F870-FAFC-425C-BFD2-1FF373608438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50C5F870-FAFC-425C-BFD2-1FF373608438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A64649-256E-4AB0-AF39-EEC33F795769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A64649-256E-4AB0-AF39-EEC33F795769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A64649-256E-4AB0-AF39-EEC33F795769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A64649-256E-4AB0-AF39-EEC33F795769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D37CD51-20E8-4B18-A9D2-D4F52193865C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D37CD51-20E8-4B18-A9D2-D4F52193865C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D37CD51-20E8-4B18-A9D2-D4F52193865C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D37CD51-20E8-4B18-A9D2-D4F52193865C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4148BA89-6371-4574-A18C-361EF260F472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4148BA89-6371-4574-A18C-361EF260F472}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4148BA89-6371-4574-A18C-361EF260F472}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4148BA89-6371-4574-A18C-361EF260F472}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{233A298F-F31A-4D9B-8E19-1C8EF53631DB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{85E42D8A-0C3E-4708-9F8F-C21F98D2F0EE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{60148123-A637-4761-8987-0B317AC8AB57} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{50C5F870-FAFC-425C-BFD2-1FF373608438} = {233A298F-F31A-4D9B-8E19-1C8EF53631DB}
+		{94A64649-256E-4AB0-AF39-EEC33F795769} = {233A298F-F31A-4D9B-8E19-1C8EF53631DB}
+		{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168} = {85E42D8A-0C3E-4708-9F8F-C21F98D2F0EE}
+		{0D37CD51-20E8-4B18-A9D2-D4F52193865C} = {85E42D8A-0C3E-4708-9F8F-C21F98D2F0EE}
+		{4148BA89-6371-4574-A18C-361EF260F472} = {60148123-A637-4761-8987-0B317AC8AB57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB2A653A-4C38-4D5A-88ED-C922D8188156}
