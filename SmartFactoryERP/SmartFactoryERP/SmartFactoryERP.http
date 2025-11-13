@@ -1,0 +1,6 @@
+@SmartFactoryERP_HostAddress = http://localhost:5069
+
+GET {{SmartFactoryERP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
