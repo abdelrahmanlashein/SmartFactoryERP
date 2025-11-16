@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartFactoryERP.Domain\SmartFactoryERP.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,44 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CBB0EAF7-535C-4FEE-A171-3FF67B753680}|SmartFactoryERP.WebAPI.IntegrationTests\\SmartFactoryERP.WebAPI.IntegrationTests.csproj|d:\\abdelrahman\\iti project\\smartfactoryerp\\smartfactoryerp\\smartfactoryerp.webapi.integrationtests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBB0EAF7-535C-4FEE-A171-3FF67B753680}|SmartFactoryERP.WebAPI.IntegrationTests\\SmartFactoryERP.WebAPI.IntegrationTests.csproj|solutionrelative:smartfactoryerp.webapi.integrationtests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C8C8C3FE-719D-4A3A-BE44-727596B02F9D}|SmartFactoryERP.Infrastructure.IntegrationTests\\SmartFactoryERP.Infrastructure.IntegrationTests.csproj|d:\\abdelrahman\\iti project\\smartfactoryerp\\smartfactoryerp\\smartfactoryerp.infrastructure.integrationtests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8C8C3FE-719D-4A3A-BE44-727596B02F9D}|SmartFactoryERP.Infrastructure.IntegrationTests\\SmartFactoryERP.Infrastructure.IntegrationTests.csproj|solutionrelative:smartfactoryerp.infrastructure.integrationtests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{07FA110D-30B0-4EA5-80DA-7C0E958B917B}|SmartFactoryERP.Application.UnitTests\\SmartFactoryERP.Application.UnitTests.csproj|d:\\abdelrahman\\iti project\\smartfactoryerp\\smartfactoryerp\\smartfactoryerp.application.unittests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{07FA110D-30B0-4EA5-80DA-7C0E958B917B}|SmartFactoryERP.Application.UnitTests\\SmartFactoryERP.Application.UnitTests.csproj|solutionrelative:smartfactoryerp.application.unittests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B45455AF-ECC5-4573-B3D4-E12D474CD3B8}|SmartFactoryERP.Domain.UnitTests\\SmartFactoryERP.Domain.UnitTests.csproj|d:\\abdelrahman\\iti project\\smartfactoryerp\\smartfactoryerp\\smartfactoryerp.domain.unittests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B45455AF-ECC5-4573-B3D4-E12D474CD3B8}|SmartFactoryERP.Domain.UnitTests\\SmartFactoryERP.Domain.UnitTests.csproj|solutionrelative:smartfactoryerp.domain.unittests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB587AF3-9658-4645-90C9-F453AB978D6A}|NewFolder1{AB587AF3-9658-4645-90C9-F453AB978D6A}|D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\Database-Schema.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{AB587AF3-9658-4645-90C9-F453AB978D6A}|NewFolder1{AB587AF3-9658-4645-90C9-F453AB978D6A}|solutionrelative:Database-Schema.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB587AF3-9658-4645-90C9-F453AB978D6A}|NewFolder1{AB587AF3-9658-4645-90C9-F453AB978D6A}|D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\API-Documentation.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{AB587AF3-9658-4645-90C9-F453AB978D6A}|NewFolder1{AB587AF3-9658-4645-90C9-F453AB978D6A}|solutionrelative:API-Documentation.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB587AF3-9658-4645-90C9-F453AB978D6A}|NewFolder1{AB587AF3-9658-4645-90C9-F453AB978D6A}|D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\Architecture.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{AB587AF3-9658-4645-90C9-F453AB978D6A}|NewFolder1{AB587AF3-9658-4645-90C9-F453AB978D6A}|solutionrelative:Architecture.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168}|SmartFactoryERP.Infrastructure\\SmartFactoryERP.Infrastructure.csproj|d:\\abdelrahman\\iti project\\smartfactoryerp\\smartfactoryerp\\smartfactoryerp.infrastructure\\smartfactoryerp.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168}|SmartFactoryERP.Infrastructure\\SmartFactoryERP.Infrastructure.csproj|solutionrelative:smartfactoryerp.infrastructure\\smartfactoryerp.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4148BA89-6371-4574-A18C-361EF260F472}|SmartFactoryERP.WebAPI\\SmartFactoryERP.WebAPI.csproj|d:\\abdelrahman\\iti project\\smartfactoryerp\\smartfactoryerp\\smartfactoryerp.webapi\\smartfactoryerp.webapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{4148BA89-6371-4574-A18C-361EF260F472}|SmartFactoryERP.WebAPI\\SmartFactoryERP.WebAPI.csproj|solutionrelative:smartfactoryerp.webapi\\smartfactoryerp.webapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +46,125 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.WebAPI.IntegrationTests\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.WebAPI.IntegrationTests\\UnitTest1.cs",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.WebAPI.IntegrationTests\\UnitTest1.cs",
+              "RelativeToolTip": "SmartFactoryERP.WebAPI.IntegrationTests\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-15T07:59:22.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Infrastructure.IntegrationTests\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Infrastructure.IntegrationTests\\UnitTest1.cs",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Infrastructure.IntegrationTests\\UnitTest1.cs",
+              "RelativeToolTip": "SmartFactoryERP.Infrastructure.IntegrationTests\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-15T07:58:36.399Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Application.UnitTests\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Application.UnitTests\\UnitTest1.cs",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Application.UnitTests\\UnitTest1.cs",
+              "RelativeToolTip": "SmartFactoryERP.Application.UnitTests\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-15T07:56:44.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UnitTest1.cs",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Domain.UnitTests\\UnitTest1.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain.UnitTests\\UnitTest1.cs",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Domain.UnitTests\\UnitTest1.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain.UnitTests\\UnitTest1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-15T07:55:34.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Database-Schema.md",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\Database-Schema.md",
+              "RelativeDocumentMoniker": "Database-Schema.md",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\Database-Schema.md",
+              "RelativeToolTip": "Database-Schema.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-11-15T07:49:38.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "API-Documentation.md",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\API-Documentation.md",
+              "RelativeDocumentMoniker": "API-Documentation.md",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\API-Documentation.md",
+              "RelativeToolTip": "API-Documentation.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-11-15T07:49:17.888Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Architecture.md",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\Architecture.md",
+              "RelativeDocumentMoniker": "Architecture.md",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\Architecture.md",
+              "RelativeToolTip": "Architecture.md",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-11-15T07:48:42.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "SmartFactoryERP.WebAPI",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.WebAPI\\SmartFactoryERP.WebAPI.csproj",
+              "RelativeDocumentMoniker": "SmartFactoryERP.WebAPI\\SmartFactoryERP.WebAPI.csproj",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.WebAPI\\SmartFactoryERP.WebAPI.csproj",
+              "RelativeToolTip": "SmartFactoryERP.WebAPI\\SmartFactoryERP.WebAPI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-13T14:58:43.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SmartFactoryERP.Infrastructure",
+              "DocumentMoniker": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Infrastructure\\SmartFactoryERP.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Infrastructure\\SmartFactoryERP.Infrastructure.csproj",
+              "ToolTip": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\SmartFactoryERP.Infrastructure\\SmartFactoryERP.Infrastructure.csproj",
+              "RelativeToolTip": "SmartFactoryERP.Infrastructure\\SmartFactoryERP.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-13T14:56:58.971Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"

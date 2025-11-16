@@ -10,4 +10,10 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartFactoryERP.Application\SmartFactoryERP.Application.csproj" />
+    <ProjectReference Include="..\SmartFactoryERP.Infrastructure\SmartFactoryERP.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartFactoryERP.Persistence\SmartFactoryERP.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

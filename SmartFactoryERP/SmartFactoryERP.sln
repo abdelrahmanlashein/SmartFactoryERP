@@ -14,6 +14,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E982D262-3CC2-46E0-875A-26D0098483E4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{AB587AF3-9658-4645-90C9-F453AB978D6A}"
+	ProjectSection(SolutionItems) = preProject
+		API-Documentation.md = API-Documentation.md
+		Architecture.md = Architecture.md
+		Database-Schema.md = Database-Schema.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Domain", "SmartFactoryERP.Domain\SmartFactoryERP.Domain.csproj", "{50C5F870-FAFC-425C-BFD2-1FF373608438}"
 EndProject
@@ -24,6 +29,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Persistence", "SmartFactoryERP.Persistence\SmartFactoryERP.Persistence.csproj", "{0D37CD51-20E8-4B18-A9D2-D4F52193865C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.WebAPI", "SmartFactoryERP.WebAPI\SmartFactoryERP.WebAPI.csproj", "{4148BA89-6371-4574-A18C-361EF260F472}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Domain.UnitTests", "SmartFactoryERP.Domain.UnitTests\SmartFactoryERP.Domain.UnitTests.csproj", "{B45455AF-ECC5-4573-B3D4-E12D474CD3B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Application.UnitTests", "SmartFactoryERP.Application.UnitTests\SmartFactoryERP.Application.UnitTests.csproj", "{07FA110D-30B0-4EA5-80DA-7C0E958B917B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.Infrastructure.IntegrationTests", "SmartFactoryERP.Infrastructure.IntegrationTests\SmartFactoryERP.Infrastructure.IntegrationTests.csproj", "{C8C8C3FE-719D-4A3A-BE44-727596B02F9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryERP.WebAPI.IntegrationTests", "SmartFactoryERP.WebAPI.IntegrationTests\SmartFactoryERP.WebAPI.IntegrationTests.csproj", "{CBB0EAF7-535C-4FEE-A171-3FF67B753680}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +64,22 @@ Global
 		{4148BA89-6371-4574-A18C-361EF260F472}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4148BA89-6371-4574-A18C-361EF260F472}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4148BA89-6371-4574-A18C-361EF260F472}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B45455AF-ECC5-4573-B3D4-E12D474CD3B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B45455AF-ECC5-4573-B3D4-E12D474CD3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B45455AF-ECC5-4573-B3D4-E12D474CD3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B45455AF-ECC5-4573-B3D4-E12D474CD3B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07FA110D-30B0-4EA5-80DA-7C0E958B917B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07FA110D-30B0-4EA5-80DA-7C0E958B917B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07FA110D-30B0-4EA5-80DA-7C0E958B917B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07FA110D-30B0-4EA5-80DA-7C0E958B917B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8C8C3FE-719D-4A3A-BE44-727596B02F9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C8C3FE-719D-4A3A-BE44-727596B02F9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C8C3FE-719D-4A3A-BE44-727596B02F9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C8C3FE-719D-4A3A-BE44-727596B02F9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB0EAF7-535C-4FEE-A171-3FF67B753680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB0EAF7-535C-4FEE-A171-3FF67B753680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB0EAF7-535C-4FEE-A171-3FF67B753680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB0EAF7-535C-4FEE-A171-3FF67B753680}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +93,10 @@ Global
 		{FF0D7D8A-6E58-4830-B4F0-D12FE26D5168} = {85E42D8A-0C3E-4708-9F8F-C21F98D2F0EE}
 		{0D37CD51-20E8-4B18-A9D2-D4F52193865C} = {85E42D8A-0C3E-4708-9F8F-C21F98D2F0EE}
 		{4148BA89-6371-4574-A18C-361EF260F472} = {60148123-A637-4761-8987-0B317AC8AB57}
+		{B45455AF-ECC5-4573-B3D4-E12D474CD3B8} = {E982D262-3CC2-46E0-875A-26D0098483E4}
+		{07FA110D-30B0-4EA5-80DA-7C0E958B917B} = {E982D262-3CC2-46E0-875A-26D0098483E4}
+		{C8C8C3FE-719D-4A3A-BE44-727596B02F9D} = {E982D262-3CC2-46E0-875A-26D0098483E4}
+		{CBB0EAF7-535C-4FEE-A171-3FF67B753680} = {E982D262-3CC2-46E0-875A-26D0098483E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB2A653A-4C38-4D5A-88ED-C922D8188156}
