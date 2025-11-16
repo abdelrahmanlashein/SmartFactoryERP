@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Entities.Shared;
+using SmartFactoryERP.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,21 +8,16 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.Inventory
 {
-    public enum AlertType
+   
+    public class StockAlert:BaseEntity
     {
-        LowStock,
-        OutOfStock
-    }
-    public class StockAlert
-    {
-        public int AlertID { get; set; } // (PK)
-        public int MaterialID { get; set; } // (FK)
-        public AlertType AlertType { get; set; }
-        public DateTime AlertDate { get; set; }
-        public bool IsResolved { get; set; }
-        public DateTime? ResolvedDate { get; set; } // Nullable, as it's only set when resolved
+        public int MaterialID { get; private set; } // (FK)
+        public Material Material { get; private set; }
+        public AlertType AlertType { get; private set; }
+        public DateTime AlertDate { get; private set; }
+        public bool IsResolved { get; private set; }
+        public DateTime? ResolvedDate { get; private set; }
 
-        // Navigation Property
-        public virtual Material Material { get; set; }
+        // ... (يمكن إضافة Methods مثل ResolveAlert()) ...   
     }
 }

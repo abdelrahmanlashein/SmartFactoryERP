@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Entities.Shared;
+using SmartFactoryERP.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,32 +8,46 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.Inventory
 {
-    public enum TransactionType
-    {
-        Purchase,
-        Production,
-        Sales,
-        Adjustment
-    }
-    public enum ReferenceType
-    {
-        PurchaseOrder,
-        ProductionOrder,
-        SalesOrder,
-        ManualAdjustment
-    }
-    public class StockTransaction
-    {
-        public long TransactionID { get; set; } // (PK) - استخدمت long لأنه قد يتراكم بسرعة
-        public int MaterialID { get; set; } // (FK)
-        public TransactionType TransactionType { get; set; }
-        public int Quantity { get; set; } // الكمية (قد تكون موجبة أو سالبة حسب نوع الحركة)
-        public DateTime TransactionDate { get; set; }
-        public long? ReferenceID { get; set; } // (links to PO/Production/Sales Order)
-        public ReferenceType? ReferenceType { get; set; }
-        public string Notes { get; set; }
 
-        // Navigation Property (لربط الكيانات ببعضها)
-        public virtual Material Material { get; set; } 
+    
+    public class StockTransaction:BaseEntity
+    {
+        public new long Id { get; private set; } // (PK)
+
+        public int MaterialID { get; private set; } // (FK)
+        public Material Material { get; private set; } // Navigation Property
+
+        public TransactionType TransactionType { get; private set; }
+        public int Quantity { get; private set; } // موجب للإضافة، سالب للصرف
+        public DateTime TransactionDate { get; private set; }
+        public long? ReferenceID { get; private set; }
+        public ReferenceType? ReferenceType { get; private set; }
+        public string? Notes { get; private set; }
+
+        private StockTransaction() { }
+
+        public static StockTransaction Create(
+            int materialId,
+            TransactionType type,
+            int quantity,
+            ReferenceType? refType,
+            long? refId,
+            string? notes)
+        {
+            if (quantity == 0)
+                throw new Exception("Transaction quantity cannot be zero.");
+
+            return new StockTransaction
+            {
+                MaterialID = materialId,
+                TransactionType = type,
+                Quantity = quantity,
+                ReferenceType = refType,
+                ReferenceID = refId,
+                Notes = notes,
+                TransactionDate = DateTime.UtcNow // مؤقتاً، الأفضل حقن IDateTime
+            };
+        }
     }
 }
+

@@ -1,7 +1,72 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Abdelrahman\\ITI Project\\SmartFactoryERP\\SmartFactoryERP\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\smartfactoryerp.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\smartfactoryerp.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.application\\features\\inventory\\commands\\creatematerial\\creatematerialcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|solutionrelative:smartfactoryerp.application\\features\\inventory\\commands\\creatematerial\\creatematerialcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\interfaces\\repositories\\iinventoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\interfaces\\repositories\\iinventoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\entities\\inventory\\stocktransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\entities\\inventory\\stocktransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\entities\\inventory\\stockalert.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\entities\\inventory\\stockalert.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\entities\\inventory\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\entities\\inventory\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\entities\\shared\\iaggregateroot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\entities\\shared\\iaggregateroot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\entities\\shared\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\entities\\shared\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\entities\\shared\\baseauditableentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\entities\\shared\\baseauditableentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.application\\features\\inventory\\commands\\creatematerial\\creatematerialcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|solutionrelative:smartfactoryerp.application\\features\\inventory\\commands\\creatematerial\\creatematerialcommandhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.application\\features\\inventory\\commands\\creatematerial\\creatematerialvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|solutionrelative:smartfactoryerp.application\\features\\inventory\\commands\\creatematerial\\creatematerialvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.application\\smartfactoryerp.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{94A64649-256E-4AB0-AF39-EEC33F795769}|SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj|solutionrelative:smartfactoryerp.application\\smartfactoryerp.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\enums\\transactiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\enums\\transactiontype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\enums\\materialtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\enums\\materialtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\enums\\referencetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\enums\\referencetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|d:\\...newwwwwwww\\sfe\\smartfactoryerp\\smartfactoryerp.domain\\enums\\alerttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{50C5F870-FAFC-425C-BFD2-1FF373608438}|SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj|solutionrelative:smartfactoryerp.domain\\enums\\alerttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +74,245 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StockAlert.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Inventory\\StockAlert.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Entities\\Inventory\\StockAlert.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Inventory\\StockAlert.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Entities\\Inventory\\StockAlert.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAsAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T15:48:53.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StockTransaction.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Inventory\\StockTransaction.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Entities\\Inventory\\StockTransaction.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Inventory\\StockTransaction.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Entities\\Inventory\\StockTransaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T10:55:02.866Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IInventoryRepository.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Interfaces\\Repositories\\IInventoryRepository.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Interfaces\\Repositories\\IInventoryRepository.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Interfaces\\Repositories\\IInventoryRepository.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Interfaces\\Repositories\\IInventoryRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T11:10:28.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CreateMaterialCommand.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommand.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommand.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommand.cs",
+              "RelativeToolTip": "SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T17:04:48.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SmartFactoryERP.Domain",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\SmartFactoryERP.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-16T11:05:40.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Material.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Inventory\\Material.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Entities\\Inventory\\Material.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Inventory\\Material.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Entities\\Inventory\\Material.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAFEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T10:54:46.641Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IAggregateRoot.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Shared\\IAggregateRoot.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Entities\\Shared\\IAggregateRoot.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Shared\\IAggregateRoot.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Entities\\Shared\\IAggregateRoot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T11:14:49.941Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Shared\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Entities\\Shared\\BaseEntity.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Shared\\BaseEntity.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Entities\\Shared\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T10:58:51.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "BaseAuditableEntity.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Shared\\BaseAuditableEntity.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Entities\\Shared\\BaseAuditableEntity.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Entities\\Shared\\BaseAuditableEntity.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Entities\\Shared\\BaseAuditableEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T11:13:24.141Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CreateMaterialCommandHandler.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommandHandler.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommandHandler.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommandHandler.cs",
+              "RelativeToolTip": "SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialCommandHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T17:15:18.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CreateMaterialValidator.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialValidator.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialValidator.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialValidator.cs",
+              "RelativeToolTip": "SmartFactoryERP.Application\\Features\\Inventory\\Commands\\CreateMaterial\\CreateMaterialValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T17:10:12.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "SmartFactoryERP.Application",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj",
+              "RelativeToolTip": "SmartFactoryERP.Application\\SmartFactoryERP.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-16T16:46:45.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ReferenceType.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\ReferenceType.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Enums\\ReferenceType.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\ReferenceType.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Enums\\ReferenceType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T16:00:51.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TransactionType.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\TransactionType.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Enums\\TransactionType.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\TransactionType.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Enums\\TransactionType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T11:07:32.329Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MaterialType.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\MaterialType.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Enums\\MaterialType.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\MaterialType.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Enums\\MaterialType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T11:06:50.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AlertType.cs",
+              "DocumentMoniker": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\AlertType.cs",
+              "RelativeDocumentMoniker": "SmartFactoryERP.Domain\\Enums\\AlertType.cs",
+              "ToolTip": "D:\\...newwwwwwww\\SFE\\SmartFactoryERP\\SmartFactoryERP.Domain\\Enums\\AlertType.cs",
+              "RelativeToolTip": "SmartFactoryERP.Domain\\Enums\\AlertType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T11:08:17.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1073,
           "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             }
           ]
         }
