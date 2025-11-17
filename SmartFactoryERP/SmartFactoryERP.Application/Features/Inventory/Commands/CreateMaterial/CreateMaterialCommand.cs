@@ -10,9 +10,9 @@ namespace SmartFactoryERP.Application.Features.Inventory.Commands.CreateMaterial
 {
     public class CreateMaterialCommand: IRequest<int>
     {
-        public string MaterialCode { get; set; }
+        public string MaterialCode { get; set; }    
         public string MaterialName { get; set; }
-        public ReferenceType MaterialType { get; set; }
+        public MaterialType MaterialType { get; set; }
         public string UnitOfMeasure { get; set; }
         public decimal UnitPrice { get; set; }
         public int MinimumStockLevel { get; set; }
