@@ -416,3 +416,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/SmartFactoryERP/.vs/SmartFactoryERP/v17/.suo
+/SmartFactoryERP/.vs/SmartFactoryERP/v17/DocumentLayout.backup.json
+/SmartFactoryERP/.vs/SmartFactoryERP/v17/DocumentLayout.json
