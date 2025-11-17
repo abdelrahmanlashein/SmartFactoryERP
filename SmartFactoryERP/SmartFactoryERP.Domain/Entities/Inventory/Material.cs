@@ -19,9 +19,10 @@ namespace SmartFactoryERP.Domain.Entities.Inventory
             public decimal UnitPrice { get; private set; }
             public int MinimumStockLevel { get; private set; }
             public int CurrentStockLevel { get; private set; }
+            public bool IsDeleted { get; private set; } 
 
-            // لإجبار EF Core على استخدامه
-            private Material() { }
+        // لإجبار EF Core على استخدامه
+        private Material() { } 
 
             // "Factory Method" لضمان إنشاء سليم
             public static Material CreateNew(
@@ -31,7 +32,7 @@ namespace SmartFactoryERP.Domain.Entities.Inventory
                 string uom,
                 decimal unitPrice,
                 int minStock)
-            {
+            { 
                 // هنا تضع قواعد البيزنس
                 if (string.IsNullOrWhiteSpace(code))
                     throw new Exception("Material Code is required."); // استخدم DomainException المخصص
@@ -79,6 +80,37 @@ namespace SmartFactoryERP.Domain.Entities.Inventory
 
                 CurrentStockLevel -= quantity;
             }
+        public void UpdateDetails(
+    string newName,
+    string newUom,
+    decimal newPrice,
+    int newMinStock)
+        {
+            // هنا نضع "قواعد البيزنس" الخاصة بالتعديل
+            if (string.IsNullOrWhiteSpace(newName))
+                throw new Exception("Material Name is required."); // استخدم DomainException
+
+            if (newPrice < 0)
+                throw new Exception("Unit Price cannot be negative.");
+
+            MaterialName = newName;
+            UnitOfMeasure = newUom;
+            UnitPrice = newPrice;
+            MinimumStockLevel = newMinStock;
+
+            // (ملاحظة: لا نسمح بتعديل MaterialCode أو MaterialType هنا)
         }
+        // --- الإضافة الجديدة ---
+        public void Delete()
+        {
+            // ربما نضيف قاعدة بيزنس هنا
+            // مثلاً: لا تحذف لو الرصيد لا يساوي صفر
+            if (CurrentStockLevel != 0)
+            {
+                throw new Exception("Cannot delete material with active stock.");
+            }
+            IsDeleted = true;
+        }
+    }
     }
 

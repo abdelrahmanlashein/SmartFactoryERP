@@ -1,5 +1,8 @@
 ﻿using MediatR;
+using SmartFactoryERP.Domain.Entities.Inventory;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Domain.Enums;
+using SmartFactoryERP.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
