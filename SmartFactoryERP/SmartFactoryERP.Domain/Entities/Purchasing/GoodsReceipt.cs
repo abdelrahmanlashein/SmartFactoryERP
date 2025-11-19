@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Entities.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,17 +13,52 @@ namespace SmartFactoryERP.Domain.Entities.Purchasing
         Complete
     }
 
-    public class GoodsReceipt
+    public class GoodsReceipt : BaseAuditableEntity, IAggregateRoot
     {
-        public int ReceiptID { get; set; } // (PK)
-        public int PurchaseOrderID { get; set; } // (FK)
-        public DateTime ReceiptDate { get; set; }
-        public string ReceivedBy { get; set; } // (مؤقتاً string، قد نربطه لاحقاً بـ Employee)
-        public string Notes { get; set; }
-        public GoodsReceiptStatus Status { get; set; }
+        public int PurchaseOrderID { get; private set; }
+        public DateTime ReceiptDate { get; private set; }
+        public string ReceivedBy { get; private set; }
+        public string Notes { get; private set; }
+        public GoodsReceiptStatus Status { get; private set; }
 
-        // Navigation Properties
-        public virtual PurchaseOrder PurchaseOrder { get; set; }
-        public virtual ICollection<GoodsReceiptItem> Items { get; set; }
+        // إدارة العناصر داخلياً
+        private readonly List<GoodsReceiptItem> _items = new();
+        public virtual IReadOnlyCollection<GoodsReceiptItem> Items => _items.AsReadOnly();
+
+        // Navigation Property
+        public virtual PurchaseOrder PurchaseOrder { get; private set; }
+
+        private GoodsReceipt() { }
+
+        public static GoodsReceipt Create(int purchaseOrderId, string receivedBy, string notes)
+        {
+            return new GoodsReceipt
+            {
+                PurchaseOrderID = purchaseOrderId,
+                ReceiptDate = DateTime.UtcNow,
+                ReceivedBy = receivedBy,
+                Notes = notes,
+                Status = GoodsReceiptStatus.Partial // نبدأ بجزئي حتى يكتمل
+            };
+        }
+
+        public void AddReceivedItem(int poItemId, int receivedQty, int rejectedQty)
+        {
+            if (receivedQty < 0 || rejectedQty < 0)
+                throw new Exception("Quantities cannot be negative.");
+
+            if (receivedQty == 0 && rejectedQty == 0)
+                throw new Exception("Must receive or reject at least one item.");
+
+            var item = GoodsReceiptItem.Create(poItemId, receivedQty, rejectedQty);
+            _items.Add(item);
+        }
+
+        // يمكن إضافة ميثود هنا لاحقاً لتحديث الـ Status
+        // بناءً على مقارنة الكميات المستلمة بالكميات المطلوبة في الـ PO
+        public void FinalizeReceipt(bool isComplete)
+        {
+            Status = isComplete ? GoodsReceiptStatus.Complete : GoodsReceiptStatus.Partial;
+        }
     }
 }

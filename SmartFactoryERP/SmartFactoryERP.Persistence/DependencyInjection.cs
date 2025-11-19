@@ -23,6 +23,7 @@ namespace SmartFactoryERP.Persistence
             // 2. إضافة الـ Repositories (ربط الـ Interface بالتنفيذ)
             services.AddScoped<IInventoryRepository, InventoryRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPurchasingRepository, PurchasingRepository>();
 
             return services;
         }

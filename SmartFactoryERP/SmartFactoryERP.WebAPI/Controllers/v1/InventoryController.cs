@@ -10,7 +10,7 @@ using SmartFactoryERP.Application.Features.Inventory.Queries.GetStockTransaction
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class InventoryController : BaseApiController
     {

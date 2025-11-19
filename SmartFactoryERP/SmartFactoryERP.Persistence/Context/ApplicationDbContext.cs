@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartFactoryERP.Domain.Entities.Inventory;
+using SmartFactoryERP.Domain.Entities.Purchasing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<Material> Materials { get; set; }
         public DbSet<StockTransaction> StockTransactions { get; set; }
         public DbSet<StockAlert> StockAlerts { get; set; }
+        // --- Purchasing (New) ---
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
+        public DbSet<GoodsReceipt> GoodsReceipts { get; set; }
+        public DbSet<GoodsReceiptItem> GoodsReceiptItems { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

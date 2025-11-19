@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Entities.Shared;
+using SmartFactoryERP.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,30 +8,60 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.Purchasing
 {
-    public enum PurchaseOrderStatus
+  
+    public class PurchaseOrder : BaseAuditableEntity, IAggregateRoot
     {
-        Draft,
-        Confirmed,
-        Received,
-        Cancelled
-    }
-    public class PurchaseOrder
-    {
-        public int PurchaseOrderID { get; set; } // (PK)
-        public string PONumber { get; set; }
-        public int SupplierID { get; set; } // (FK)
-        public DateTime OrderDate { get; set; }
-        public DateTime ExpectedDeliveryDate { get; set; }
-        public decimal TotalAmount { get; set; }
-        public PurchaseOrderStatus Status { get; set; }
+        public string PONumber { get; private set; }
+        public int SupplierID { get; private set; }
+        public DateTime OrderDate { get; private set; }
+        public DateTime ExpectedDeliveryDate { get; private set; }
+        public PurchaseOrderStatus Status { get; private set; }
 
-        // (CreatedBy - سأفترض أنه اسم المستخدم أو ID المستخدم، سأستخدم string مؤقتاً)
-        // (يمكن تغييره لاحقاً إلى FK لجدول المستخدمين)
-        public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
+        // المجموع يحسب بناءً على الأصناف
+        public decimal TotalAmount => _items.Sum(i => i.TotalPrice);
 
-        // Navigation Properties
-        public virtual Supplier Supplier { get; set; }
-        public virtual ICollection<PurchaseOrderItem> Items { get; set; }
+        // القائمة الداخلية (قابلة للتعديل)
+        private readonly List<PurchaseOrderItem> _items = new();
+
+        // القائمة الخارجية (للقراءة فقط)
+        public virtual IReadOnlyCollection<PurchaseOrderItem> Items => _items.AsReadOnly();
+        public virtual Supplier Supplier { get; private set; }
+
+        private PurchaseOrder() { }
+
+        public static PurchaseOrder Create(string poNumber, int supplierId, DateTime expectedDate)
+        {
+            return new PurchaseOrder
+            {
+                PONumber = poNumber,
+                SupplierID = supplierId,
+                OrderDate = DateTime.UtcNow,
+                ExpectedDeliveryDate = expectedDate,
+                Status = PurchaseOrderStatus.Draft
+            };
+        }
+
+        // إضافة صنف للطلب
+        public void AddItem(int materialId, int quantity, decimal unitPrice)
+        {
+            if (Status != PurchaseOrderStatus.Draft)
+                throw new Exception("Cannot add items to a confirmed order.");
+
+            var existingItem = _items.FirstOrDefault(i => i.MaterialID == materialId);
+            if (existingItem != null)
+            {
+                existingItem.UpdateQuantity(existingItem.Quantity + quantity);
+            }
+            else
+            {
+                _items.Add(PurchaseOrderItem.Create(materialId, quantity, unitPrice));
+            }
+        }
+
+        public void Confirm()
+        {
+            if (!_items.Any()) throw new Exception("Cannot confirm empty order.");
+            Status = PurchaseOrderStatus.Confirmed;
+        }
     }
 }
