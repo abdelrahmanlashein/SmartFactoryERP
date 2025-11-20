@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartFactoryERP.Persistence.Context;
 
@@ -11,9 +12,11 @@ using SmartFactoryERP.Persistence.Context;
 namespace SmartFactoryERP.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251120112618_SalesOrderModule")]
+    partial class SalesOrderModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -407,55 +410,6 @@ namespace SmartFactoryERP.Persistence.Migrations
                     b.ToTable("Customers", "Sales");
                 });
 
-            modelBuilder.Entity("SmartFactoryERP.Domain.Entities.Sales.Invoice", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("InvoiceDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("InvoiceNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("LastUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastUpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SalesOrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceNumber")
-                        .IsUnique();
-
-                    b.HasIndex("SalesOrderId");
-
-                    b.ToTable("Invoices", "Sales");
-                });
-
             modelBuilder.Entity("SmartFactoryERP.Domain.Entities.Sales.SalesOrder", b =>
                 {
                     b.Property<int>("Id")
@@ -610,17 +564,6 @@ namespace SmartFactoryERP.Persistence.Migrations
                     b.Navigation("Material");
 
                     b.Navigation("PurchaseOrder");
-                });
-
-            modelBuilder.Entity("SmartFactoryERP.Domain.Entities.Sales.Invoice", b =>
-                {
-                    b.HasOne("SmartFactoryERP.Domain.Entities.Sales.SalesOrder", "SalesOrder")
-                        .WithMany()
-                        .HasForeignKey("SalesOrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("SalesOrder");
                 });
 
             modelBuilder.Entity("SmartFactoryERP.Domain.Entities.Sales.SalesOrder", b =>

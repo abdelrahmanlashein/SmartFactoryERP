@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartFactoryERP.Domain.Entities.Inventory;
 using SmartFactoryERP.Domain.Entities.Purchasing;
+using SmartFactoryERP.Domain.Entities.Sales;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,10 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public DbSet<GoodsReceipt> GoodsReceipts { get; set; }
         public DbSet<GoodsReceiptItem> GoodsReceiptItems { get; set; }
-
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<SalesOrder> SalesOrders { get; set; }
+        public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
