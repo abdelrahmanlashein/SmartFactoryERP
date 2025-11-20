@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartFactoryERP.Domain.Entities.Inventory;
+using SmartFactoryERP.Domain.Entities.Production;
 using SmartFactoryERP.Domain.Entities.Purchasing;
 using SmartFactoryERP.Domain.Entities.Sales;
 using System;
@@ -27,6 +28,8 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<SalesOrder> SalesOrders { get; set; }
         public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<ProductionOrder> ProductionOrders { get; set; }
+        public DbSet<BillOfMaterial> BillOfMaterials { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
