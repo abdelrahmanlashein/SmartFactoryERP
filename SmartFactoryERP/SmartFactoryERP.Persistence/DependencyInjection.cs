@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Domain.Interfaces.Repositories.SmartFactoryERP.Domain.Interfaces.Repositories;
 using SmartFactoryERP.Persistence.Context;
 using SmartFactoryERP.Persistence.Repositories;
 using System;

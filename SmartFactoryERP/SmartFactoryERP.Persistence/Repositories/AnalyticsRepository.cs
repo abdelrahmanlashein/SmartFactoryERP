@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartFactoryERP.Domain.Enums;
+using SmartFactoryERP.Domain.Interfaces.Repositories.SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Persistence.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardStats;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {
