@@ -12,7 +12,7 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Queries.GetGoodsReceip
         public int Id { get; set; }
         public int PurchaseOrderId { get; set; }
         public DateTime ReceiptDate { get; set; }
-        public string ReceivedBy { get; set; }
+        public int ReceivedById { get; set; }
         public string Notes { get; set; }
         public string Status { get; set; }
 

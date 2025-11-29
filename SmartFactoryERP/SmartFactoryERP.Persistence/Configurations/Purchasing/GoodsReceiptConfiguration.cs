@@ -24,6 +24,11 @@ namespace SmartFactoryERP.Persistence.Configurations.Purchasing
                    .WithMany()
                    .HasForeignKey(gr => gr.PurchaseOrderID)
                    .OnDelete(DeleteBehavior.Restrict); // أيضاً Restrict هنا أفضل
+
+            builder.HasOne(gr => gr.ReceivedBy) // الكيان المرتبط (Employee)
+                   .WithMany()                  // الموظف الواحد يستلم بضائع كتير
+                   .HasForeignKey(gr => gr.ReceivedById)
+                   .OnDelete(DeleteBehavior.Restrict); // مهم: ممنوع حذف موظف قام باستلام بضاعة سابقاً
         }
     }
 }

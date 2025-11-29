@@ -37,7 +37,7 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreateGoodsRe
             }
 
             // 2. Create the Goods Receipt Aggregate Root
-            var receipt = GoodsReceipt.Create(request.PurchaseOrderId, request.ReceivedBy, request.Notes);
+            var receipt = GoodsReceipt.Create(request.PurchaseOrderId, request.ReceivedById, request.Notes);
 
             // 3. Process Items and Update Stock/PO Status
             foreach (var itemDto in request.Items.Where(i => i.ReceivedQuantity > 0))

@@ -28,7 +28,7 @@ namespace SmartFactoryERP.Persistence
             services.AddScoped<ISalesRepository, SalesRepository>();
             services.AddScoped<IProductionRepository, ProductionRepository>();
             services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
-
+            services.AddScoped<IHRRepository, HRRepository>();
             return services;
         }
     }

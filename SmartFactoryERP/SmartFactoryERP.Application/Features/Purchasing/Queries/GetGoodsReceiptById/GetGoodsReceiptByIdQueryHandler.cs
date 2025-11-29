@@ -34,7 +34,7 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Queries.GetGoodsReceip
                 Id = receipt.Id,
                 PurchaseOrderId = receipt.PurchaseOrderID,
                 ReceiptDate = receipt.ReceiptDate,
-                ReceivedBy = receipt.ReceivedBy,
+                ReceivedById = receipt.ReceivedById,
                 Notes = receipt.Notes,
                 Status = receipt.Status.ToString(),
 
