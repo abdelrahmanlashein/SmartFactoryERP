@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SmartFactoryERP.Domain.Interfaces.Repositories.SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

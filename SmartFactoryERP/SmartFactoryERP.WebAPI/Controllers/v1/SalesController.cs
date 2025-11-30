@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartFactoryERP.Application.Features.Sales.Commands.ConfirmSalesOrder;
 using SmartFactoryERP.Application.Features.Sales.Commands.CreateCustomer;
+using SmartFactoryERP.Application.Features.Sales.Commands.CreateSalesOrder;
 using SmartFactoryERP.Application.Features.Sales.Commands.GenerateInvoice;
-using SmartFactoryERP.Application.Features.Sales.CreateSalesOrder;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {

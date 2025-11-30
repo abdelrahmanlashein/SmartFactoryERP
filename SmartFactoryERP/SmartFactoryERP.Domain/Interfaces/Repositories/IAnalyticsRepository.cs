@@ -25,5 +25,5 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
             Task<decimal> GetPendingSalesRevenueAsync(CancellationToken token);
             Task<int> GetActiveProductionCountAsync(CancellationToken token);
         }
-    }
+    
 }

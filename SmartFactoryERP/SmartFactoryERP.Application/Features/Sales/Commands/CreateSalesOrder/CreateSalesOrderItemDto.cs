@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartFactoryERP.Application.Features.Sales.CreateSalesOrder
+namespace SmartFactoryERP.Application.Features.Sales.Commands.CreateSalesOrder
 {
     public class CreateSalesOrderItemDto
     {
