@@ -1,9 +1,7 @@
 ﻿using MediatR;
+using SmartFactoryERP.Domain.Interfaces.Repositories; // ✅ تصحيح الـ Namespace
 using SmartFactoryERP.Domain.Interfaces.Repositories.SmartFactoryERP.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardStats
@@ -19,22 +17,22 @@ namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardSta
 
         public async Task<DashboardStatsDto> Handle(GetDashboardStatsQuery request, CancellationToken cancellationToken)
         {
-            // Execute queries in parallel for performance (Optional but good practice)
-            var taskTotalMaterials = _analyticsRepository.GetTotalMaterialsAsync(cancellationToken);
-            var taskLowStock = _analyticsRepository.GetLowStockCountAsync(cancellationToken);
-            var taskSalesCount = _analyticsRepository.GetPendingSalesCountAsync(cancellationToken);
-            var taskRevenue = _analyticsRepository.GetPendingSalesRevenueAsync(cancellationToken);
-            var taskProduction = _analyticsRepository.GetActiveProductionCountAsync(cancellationToken);
+            // ✅ الحل: تنفيذ الاستعلامات واحداً تلو الآخر (Sequential)
+            // هذا يمنع تداخل العمليات على الـ DbContext
 
-            await Task.WhenAll(taskTotalMaterials, taskLowStock, taskSalesCount, taskRevenue, taskProduction);
+            var totalMaterials = await _analyticsRepository.GetTotalMaterialsAsync(cancellationToken);
+            var lowStock = await _analyticsRepository.GetLowStockCountAsync(cancellationToken);
+            var salesCount = await _analyticsRepository.GetPendingSalesCountAsync(cancellationToken);
+            var revenue = await _analyticsRepository.GetPendingSalesRevenueAsync(cancellationToken);
+            var productionCount = await _analyticsRepository.GetActiveProductionCountAsync(cancellationToken);
 
             return new DashboardStatsDto
             {
-                TotalMaterialsCount = taskTotalMaterials.Result,
-                LowStockItemsCount = taskLowStock.Result,
-                PendingSalesOrders = taskSalesCount.Result,
-                PotentialRevenue = taskRevenue.Result,
-                ActiveProductionOrders = taskProduction.Result
+                TotalMaterialsCount = totalMaterials,
+                LowStockItemsCount = lowStock,
+                PendingSalesOrders = salesCount,
+                PotentialRevenue = revenue,
+                ActiveProductionOrders = productionCount
             };
         }
     }

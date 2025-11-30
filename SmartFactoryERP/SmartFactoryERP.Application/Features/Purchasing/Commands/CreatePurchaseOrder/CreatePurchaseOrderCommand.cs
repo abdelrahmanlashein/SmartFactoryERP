@@ -12,7 +12,7 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreatePurchas
     {
         public int SupplierId { get; set; }
         public DateTime ExpectedDeliveryDate { get; set; }
-        public string PONumber { get; set; } // Will be generated or provided
+        public string? PONumber { get; set; } // Will be generated or provided
 
         // The list of items attached to the order
         public List<CreatePurchaseOrderItemDto> Items { get; set; }

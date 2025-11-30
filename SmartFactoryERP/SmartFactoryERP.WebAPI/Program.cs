@@ -11,6 +11,14 @@ namespace SmartFactoryERP.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", // «Õ›Ÿ «·«”„ œÂ ﬂÊÌ”
+                    b => b.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+            });
+
             // «” œ⁄«¡ «·„ÌÀÊœ“ „‰ „·›«  DependencyInjection
             builder.Services.AddApplicationServices(); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
             builder.Services.AddPersistenceServices(builder.Configuration); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
@@ -42,7 +50,7 @@ namespace SmartFactoryERP.WebAPI
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("AllowAll");
             app.UseAuthorization();
 
 
