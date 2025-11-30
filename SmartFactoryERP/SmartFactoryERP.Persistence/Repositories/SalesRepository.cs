@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Persistence.Repositories
@@ -52,6 +53,16 @@ namespace SmartFactoryERP.Persistence.Repositories
         public async Task AddInvoiceAsync(Invoice invoice, CancellationToken cancellationToken)
         {
             await _context.Invoices.AddAsync(invoice, cancellationToken);
+        }
+        // SalesRepository.cs
+        public async Task<Invoice> GetInvoiceByIdAsync(int id, CancellationToken token)
+        {
+            return await _context.Invoices
+                .Include(i => i.SalesOrder)
+                    .ThenInclude(so => so.Customer)
+                .Include(i => i.SalesOrder)
+                    .ThenInclude(so => so.Items) // Items loaded
+                .FirstOrDefaultAsync(i => i.Id == id, token);
         }
     }
 }

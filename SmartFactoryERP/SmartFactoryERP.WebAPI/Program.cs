@@ -2,13 +2,18 @@ using Microsoft.EntityFrameworkCore;
 using SmartFactoryERP.Application; // 1. áÅÖÇİÉ ÎÏãÇÊ Application
 using SmartFactoryERP.Persistence; // 2. áÅÖÇİÉ ÎÏãÇÊ Persistence
 using SmartFactoryERP.Persistence.Context;
+using SmartFactoryERP.Infrastructure;
+
 using System.Text.Json.Serialization;
+using QuestPDF.Infrastructure;
 namespace SmartFactoryERP.WebAPI
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+
+            QuestPDF.Settings.License = LicenseType.Community;
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddCors(options =>
@@ -22,7 +27,7 @@ namespace SmartFactoryERP.WebAPI
             // ÇÓÊÏÚÇÁ ÇáãíËæÏÒ ãä ãáİÇÊ DependencyInjection
             builder.Services.AddApplicationServices(); // ÓääÔÆ åĞå ÇáãíËæÏ
             builder.Services.AddPersistenceServices(builder.Configuration); // ÓääÔÆ åĞå ÇáãíËæÏ
-
+            builder.Services.AddInfrastructureServices(builder.Configuration);
             // Add services to the container.
             //builder.Services.AddControllers();
             builder.Services.AddControllers()
