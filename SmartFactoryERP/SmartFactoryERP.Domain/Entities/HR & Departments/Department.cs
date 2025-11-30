@@ -1,4 +1,5 @@
-﻿using SmartFactoryERP.Domain.Entities.Shared;
+﻿using SmartFactoryERP.Domain.Entities.HR;
+using SmartFactoryERP.Domain.Entities.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

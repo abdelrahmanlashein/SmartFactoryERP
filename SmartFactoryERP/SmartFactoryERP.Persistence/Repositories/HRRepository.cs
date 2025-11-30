@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartFactoryERP.Domain.Entities.HR;
 using SmartFactoryERP.Domain.Entities.HR___Departments;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
 using SmartFactoryERP.Persistence.Context;

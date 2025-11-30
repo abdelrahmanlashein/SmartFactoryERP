@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SmartFactoryERP.Domain.Entities.HR;
 using SmartFactoryERP.Domain.Entities.HR___Departments;
 using System;
 using System.Collections.Generic;

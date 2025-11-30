@@ -8,15 +8,15 @@ namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardSta
 {
     public class DashboardStatsDto
     {
-        // Inventory Stats
-        public int TotalMaterialsCount { get; set; } // How many types of materials?
-        public int LowStockItemsCount { get; set; }  // How many need reordering?
+        // ... (الحقول القديمة: Inventory, Production) ...
+        public int TotalMaterialsCount { get; set; }
+        public int LowStockItemsCount { get; set; }
+        public int ActiveProductionOrders { get; set; }
 
-        // Sales Stats
-        public int PendingSalesOrders { get; set; }  // Confirmed but not Shipped
-        public decimal PotentialRevenue { get; set; } // Total $$ of active orders
-
-        // Production Stats
-        public int ActiveProductionOrders { get; set; } // Started or Planned
+        // --- التحديث المالي ---
+        public int PendingSalesOrders { get; set; }
+        public decimal TotalRevenue { get; set; }   // إجمالي المبيعات (Confirmed/Invoiced)
+        public decimal TotalExpenses { get; set; }  // إجمالي المصروفات
+        public decimal NetProfit { get; set; }      // صافي الربح (Revenue - Expenses)
     }
 }

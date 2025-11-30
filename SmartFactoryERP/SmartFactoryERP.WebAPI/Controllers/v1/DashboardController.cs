@@ -9,7 +9,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
     public class DashboardController : BaseApiController
     {
         [HttpGet("stats")]
-        public async Task<IActionResult> GetDashboardStats()
+        public async Task<IActionResult> GetDashboardStats() //tested
         {
             var stats = await Mediator.Send(new GetDashboardStatsQuery());
             return Ok(stats);

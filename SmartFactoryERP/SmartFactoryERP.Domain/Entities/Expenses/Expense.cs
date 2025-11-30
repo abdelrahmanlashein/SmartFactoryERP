@@ -1,4 +1,6 @@
 ﻿using SmartFactoryERP.Domain.Entities.HR___Departments;
+using SmartFactoryERP.Domain.Entities.Shared;
+using SmartFactoryERP.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +9,31 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.Expenses
 {
-    public class Expense
+    public class Expense : BaseAuditableEntity, IAggregateRoot
     {
-        public int ExpenseID { get; set; } // (PK)
-        public DateTime ExpenseDate { get; set; }
-        public int CategoryID { get; set; } // (FK)
-        public int DepartmentID { get; set; } // (FK)
-        public decimal Amount { get; set; }
-        public string Description { get; set; }
-        public string CreatedBy { get; set; } // (مؤقتاً string)
-        public DateTime CreatedDate { get; set; }
-        public string AttachmentPath { get; set; } // (مسار المرفق)
+        public string Description { get; private set; }
+        public decimal Amount { get; private set; }
+        public DateTime ExpenseDate { get; private set; }
+        public ExpenseCategory Category { get; private set; }
 
-        // Navigation Properties
-        public virtual ExpenseCategory Category { get; set; }
-        public virtual Department Department { get; set; }
+        // ممكن نربطه بموظف (مين اللي صرف؟)
+        public int? EmployeeId { get; private set; }
+
+        private Expense() { }
+
+        public static Expense Create(string desc, decimal amount, DateTime date, ExpenseCategory category, int? empId)
+        {
+            if (amount <= 0) throw new Exception("Amount must be > 0");
+            if (string.IsNullOrWhiteSpace(desc)) throw new Exception("Description is required");
+
+            return new Expense
+            {
+                Description = desc,
+                Amount = amount,
+                ExpenseDate = date,
+                Category = category,
+                EmployeeId = empId
+            };
+        }
     }
 }

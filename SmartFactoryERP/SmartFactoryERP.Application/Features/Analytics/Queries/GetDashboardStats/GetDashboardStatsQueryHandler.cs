@@ -1,9 +1,6 @@
 ﻿using MediatR;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardStats
@@ -19,22 +16,36 @@ namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardSta
 
         public async Task<DashboardStatsDto> Handle(GetDashboardStatsQuery request, CancellationToken cancellationToken)
         {
-            // Execute queries in parallel for performance (Optional but good practice)
-            var taskTotalMaterials = _analyticsRepository.GetTotalMaterialsAsync(cancellationToken);
-            var taskLowStock = _analyticsRepository.GetLowStockCountAsync(cancellationToken);
-            var taskSalesCount = _analyticsRepository.GetPendingSalesCountAsync(cancellationToken);
-            var taskRevenue = _analyticsRepository.GetPendingSalesRevenueAsync(cancellationToken);
-            var taskProduction = _analyticsRepository.GetActiveProductionCountAsync(cancellationToken);
+            // ✅ 1. التنفيذ المتسلسل (Sequential Execution)
+            // لحل مشكلة "InvalidOperationException" مع EF Core
 
-            await Task.WhenAll(taskTotalMaterials, taskLowStock, taskSalesCount, taskRevenue, taskProduction);
+            var totalMaterials = await _analyticsRepository.GetTotalMaterialsAsync(cancellationToken);
+            var lowStock = await _analyticsRepository.GetLowStockCountAsync(cancellationToken);
+            var activeProduction = await _analyticsRepository.GetActiveProductionCountAsync(cancellationToken);
 
+            // --- البيانات المالية ---
+            var pendingSales = await _analyticsRepository.GetPendingSalesCountAsync(cancellationToken);
+            var totalRevenue = await _analyticsRepository.GetPendingSalesRevenueAsync(cancellationToken);
+
+            // 👇 الجديد: جلب المصروفات
+            var totalExpenses = await _analyticsRepository.GetTotalExpensesAsync(cancellationToken);
+
+            // 👇 الجديد: حساب صافي الربح
+            var netProfit = totalRevenue - totalExpenses;
+
+            // ✅ 2. إرجاع الـ DTO بالبيانات الكاملة
             return new DashboardStatsDto
             {
-                TotalMaterialsCount = taskTotalMaterials.Result,
-                LowStockItemsCount = taskLowStock.Result,
-                PendingSalesOrders = taskSalesCount.Result,
-                PotentialRevenue = taskRevenue.Result,
-                ActiveProductionOrders = taskProduction.Result
+                TotalMaterialsCount = totalMaterials,
+                LowStockItemsCount = lowStock,
+                ActiveProductionOrders = activeProduction,
+
+                PendingSalesOrders = pendingSales,
+                TotalRevenue = totalRevenue,
+
+                // الحقول الجديدة
+                TotalExpenses = totalExpenses,
+                NetProfit = netProfit
             };
         }
     }
