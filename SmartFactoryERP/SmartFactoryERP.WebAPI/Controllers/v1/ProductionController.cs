@@ -2,9 +2,9 @@
 using SmartFactoryERP.Application.Features.Production.Commands.CreateBOM;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SmartFactoryERP.Application.Features.Production.Commands.CreateProductionOrder;
 using SmartFactoryERP.Application.Features.Production.Commands.CompleteProduction;
 using SmartFactoryERP.Application.Features.Production.Commands.StartProduction;
+using SmartFactoryERP.Application.Features.Production.Commands.CreateProductionOrder;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {
@@ -14,13 +14,12 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
     {
         // POST api/v1/production/bom
         [HttpPost("bom")]
-        public async Task<IActionResult> CreateBillOfMaterial([FromBody] CreateBillOfMaterialCommand command) //tested
+        public async Task<IActionResult> CreateBillOfMaterial([FromBody] CreateBillOfMaterialCommand command)
         {
             var bomId = await Mediator.Send(command);
             return Ok(bomId);
         }
     
-
     #region test 
     /*
      * How to Test (Postman)
@@ -57,7 +56,7 @@ Once you confirm this works, we can move to the main event: Creating a Productio
 
     // POST api/v1/production/orders
     [HttpPost("orders")]
-        public async Task<IActionResult> CreateProductionOrder([FromBody] CreateProductionOrderCommand command) // tested but need to retest after BOM
+        public async Task<IActionResult> CreateProductionOrder([FromBody] CreateProductionOrderCommand command)
         {
             var orderId = await Mediator.Send(command);
             return Ok(orderId);
@@ -103,7 +102,7 @@ Deduct the Raw Materials from Inventory (Work In Progress).
 
         // POST api/v1/production/orders/{id}/start
         [HttpPost("orders/{id}/start")]
-        public async Task<IActionResult> StartProduction(int id) //500
+        public async Task<IActionResult> StartProduction(int id)
         {
             await Mediator.Send(new StartProductionCommand { Id = id });
             return NoContent();
@@ -122,4 +121,3 @@ Deduct the Raw Materials from Inventory (Work In Progress).
         #endregion
     }
 }
-

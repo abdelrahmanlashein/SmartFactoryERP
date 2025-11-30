@@ -26,3 +26,4 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
             Task<int> GetActiveProductionCountAsync(CancellationToken token);
         }
     }
+}

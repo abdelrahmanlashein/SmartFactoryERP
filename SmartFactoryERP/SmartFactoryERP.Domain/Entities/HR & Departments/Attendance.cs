@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Entities.Shared;
+using SmartFactoryERP.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +8,10 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.HR___Departments
 {
-    public enum AttendanceStatus
+   
+    public class Attendance :BaseEntity
     {
-        Present,
-        Absent,
-        Late,
-        Leave
-    }
-    public class Attendance
-    {
-        public int AttendanceID { get; set; } // (PK)
+        // ID (PK) is from BaseEntity
         public int EmployeeID { get; set; } // (FK)
         public DateTime Date { get; set; }
         public DateTime? CheckInTime { get; set; } // (Nullable في حالة الغياب/الإجازة)

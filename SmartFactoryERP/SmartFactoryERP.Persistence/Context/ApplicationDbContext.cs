@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartFactoryERP.Domain.Entities.HR___Departments;
 using SmartFactoryERP.Domain.Entities.Inventory;
 using SmartFactoryERP.Domain.Entities.Production;
 using SmartFactoryERP.Domain.Entities.Purchasing;
@@ -30,6 +31,9 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<ProductionOrder> ProductionOrders { get; set; }
         public DbSet<BillOfMaterial> BillOfMaterials { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        //public DbSet<Attendance> Attendances { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }

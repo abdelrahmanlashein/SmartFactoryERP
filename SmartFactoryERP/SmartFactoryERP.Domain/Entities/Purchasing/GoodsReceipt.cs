@@ -1,4 +1,5 @@
-﻿using SmartFactoryERP.Domain.Entities.Shared;
+﻿using SmartFactoryERP.Domain.Entities.HR___Departments;
+using SmartFactoryERP.Domain.Entities.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,9 @@ namespace SmartFactoryERP.Domain.Entities.Purchasing
     {
         public int PurchaseOrderID { get; private set; }
         public DateTime ReceiptDate { get; private set; }
-        public string ReceivedBy { get; private set; }
+        //public String ReceivedBy { get; private set; }
+        public int ReceivedById { get; private set; }
+        public virtual Employee ReceivedBy { get; private set; } // Navigation Property
         public string Notes { get; private set; }
         public GoodsReceiptStatus Status { get; private set; }
 
@@ -30,13 +33,13 @@ namespace SmartFactoryERP.Domain.Entities.Purchasing
 
         private GoodsReceipt() { }
 
-        public static GoodsReceipt Create(int purchaseOrderId, string receivedBy, string notes)
+        public static GoodsReceipt Create(int purchaseOrderId, int employeeId, string notes)
         {
             return new GoodsReceipt
             {
                 PurchaseOrderID = purchaseOrderId,
                 ReceiptDate = DateTime.UtcNow,
-                ReceivedBy = receivedBy,
+                ReceivedById = employeeId,
                 Notes = notes,
                 Status = GoodsReceiptStatus.Partial // نبدأ بجزئي حتى يكتمل
             };

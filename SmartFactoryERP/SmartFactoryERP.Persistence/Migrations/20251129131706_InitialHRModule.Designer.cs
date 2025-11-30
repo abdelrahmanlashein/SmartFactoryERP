@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartFactoryERP.Persistence.Context;
 
@@ -11,9 +12,11 @@ using SmartFactoryERP.Persistence.Context;
 namespace SmartFactoryERP.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251129131706_InitialHRModule")]
+    partial class InitialHRModule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -344,8 +347,9 @@ namespace SmartFactoryERP.Persistence.Migrations
                     b.Property<DateTime>("ReceiptDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ReceivedById")
-                        .HasColumnType("int");
+                    b.Property<string>("ReceivedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -354,8 +358,6 @@ namespace SmartFactoryERP.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PurchaseOrderID");
-
-                    b.HasIndex("ReceivedById");
 
                     b.ToTable("GoodsReceipts", "Purchasing");
                 });
@@ -766,15 +768,7 @@ namespace SmartFactoryERP.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SmartFactoryERP.Domain.Entities.HR___Departments.Employee", "ReceivedBy")
-                        .WithMany()
-                        .HasForeignKey("ReceivedById")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("PurchaseOrder");
-
-                    b.Navigation("ReceivedBy");
                 });
 
             modelBuilder.Entity("SmartFactoryERP.Domain.Entities.Purchasing.GoodsReceiptItem", b =>

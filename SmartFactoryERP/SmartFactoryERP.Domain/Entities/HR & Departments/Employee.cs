@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Entities.Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,27 +7,47 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.HR___Departments
 {
-    public class Employee
+
+    public class Employee : BaseAuditableEntity, IAggregateRoot
     {
-        public int EmployeeID { get; set; } // (PK)
-        public string EmployeeCode { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public int DepartmentID { get; set; } // (FK)
-        public string Position { get; set; }
-        public DateTime HireDate { get; set; }
-        public bool IsActive { get; set; }
+        public string FullName { get; private set; }
+        public string JobTitle { get; private set; } // e.g., "Sales Agent", "Warehouse Keeper"
+        public string Email { get; private set; }
+        public string PhoneNumber { get; private set; }
+        public DateTime HireDate { get; private set; }
+        public bool IsActive { get; private set; }
 
-        // (FK -> User for login) - هذا سيربط بجدول المستخدمين (مثل AspNetUsers)
-        // سأفترضه string (Guid) أو int حسب نظام الهوية المستخدم
-        public string UserID { get; set; }
+        // Foreign Key
+        public int DepartmentId { get; private set; }
+        public virtual Department Department { get; private set; }
 
-        // Navigation Properties
-        public virtual Department Department { get; set; }
+        private Employee() { }
 
-        // (Navigation property for Manager in Department)
-        public virtual Department ManagedDepartment { get; set; }
+        public static Employee Create(string fullName, string jobTitle, string email, string phone, int departmentId)
+        {
+            if (string.IsNullOrWhiteSpace(fullName)) throw new Exception("Name is required.");
+            if (departmentId <= 0) throw new Exception("Department is required.");
+
+            return new Employee
+            {
+                FullName = fullName,
+                JobTitle = jobTitle,
+                Email = email,
+                PhoneNumber = phone,
+                DepartmentId = departmentId,
+                HireDate = DateTime.UtcNow,
+                IsActive = true
+            };
+        }
+
+        public void UpdateDetails(string fullName, string jobTitle, string phone, int departmentId)
+        {
+            FullName = fullName;
+            JobTitle = jobTitle;
+            PhoneNumber = phone;
+            DepartmentId = departmentId;
+        }
     }
 }
+
+
