@@ -14,7 +14,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
     {
         // POST api/v1/production/bom
         [HttpPost("bom")]
-        public async Task<IActionResult> CreateBillOfMaterial([FromBody] CreateBillOfMaterialCommand command)
+        public async Task<IActionResult> CreateBillOfMaterial([FromBody] CreateBillOfMaterialCommand command) //tested
         {
             var bomId = await Mediator.Send(command);
             return Ok(bomId);
@@ -56,7 +56,7 @@ Once you confirm this works, we can move to the main event: Creating a Productio
 
     // POST api/v1/production/orders
     [HttpPost("orders")]
-        public async Task<IActionResult> CreateProductionOrder([FromBody] CreateProductionOrderCommand command)
+        public async Task<IActionResult> CreateProductionOrder([FromBody] CreateProductionOrderCommand command) // tested but need to retest after BOM
         {
             var orderId = await Mediator.Send(command);
             return Ok(orderId);
@@ -102,7 +102,7 @@ Deduct the Raw Materials from Inventory (Work In Progress).
 
         // POST api/v1/production/orders/{id}/start
         [HttpPost("orders/{id}/start")]
-        public async Task<IActionResult> StartProduction(int id)
+        public async Task<IActionResult> StartProduction(int id) //500
         {
             await Mediator.Send(new StartProductionCommand { Id = id });
             return NoContent();
