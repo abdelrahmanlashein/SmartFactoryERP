@@ -13,7 +13,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
     {
         // POST api/v1/sales/customers
         [HttpPost("customers")]
-        public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)
+        public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command) //tested
         {
             var customerId = await Mediator.Send(command);
             return Ok(customerId);
@@ -45,7 +45,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         #endregion
         // POST api/v1/sales/orders
         [HttpPost("orders")]
-        public async Task<IActionResult> CreateSalesOrder([FromBody] CreateSalesOrderCommand command)
+        public async Task<IActionResult> CreateSalesOrder([FromBody] CreateSalesOrderCommand command) // tested
         {
             var orderId = await Mediator.Send(command);
             // مبدئياً نرجع Ok لحد ما نعمل الـ GetById
@@ -72,14 +72,14 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // POST api/v1/sales/orders/{id}/confirm
         [HttpPost("orders/{id}/confirm")]
-        public async Task<IActionResult> ConfirmSalesOrder(int id)
+        public async Task<IActionResult> ConfirmSalesOrder(int id) //500
         {
             await Mediator.Send(new ConfirmSalesOrderCommand { Id = id });
             return NoContent();
         }
 
         [HttpPost("invoices")]
-        public async Task<IActionResult> GenerateInvoice([FromBody] GenerateInvoiceCommand command)
+        public async Task<IActionResult> GenerateInvoice([FromBody] GenerateInvoiceCommand command) //500
         {
             var invoiceId = await Mediator.Send(command);
             return Ok(invoiceId);

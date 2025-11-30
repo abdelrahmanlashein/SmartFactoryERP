@@ -16,8 +16,7 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
     // CORRECTION: The best architectural approach here is to keep the Repository returning pure data.
     // Let's define a "StatsModel" in Domain, or just query count/sum in the implementation.
 
-    namespace SmartFactoryERP.Domain.Interfaces.Repositories
-    {
+    
         public interface IAnalyticsRepository
         {
             Task<int> GetTotalMaterialsAsync(CancellationToken token);
