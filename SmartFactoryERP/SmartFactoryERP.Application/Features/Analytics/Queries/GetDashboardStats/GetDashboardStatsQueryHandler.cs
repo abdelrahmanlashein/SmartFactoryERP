@@ -1,6 +1,5 @@
 ﻿using MediatR;
-using SmartFactoryERP.Domain.Interfaces.Repositories; // ✅ تصحيح الـ Namespace
-using SmartFactoryERP.Domain.Interfaces.Repositories.SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,22 +16,36 @@ namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardSta
 
         public async Task<DashboardStatsDto> Handle(GetDashboardStatsQuery request, CancellationToken cancellationToken)
         {
-            // ✅ الحل: تنفيذ الاستعلامات واحداً تلو الآخر (Sequential)
-            // هذا يمنع تداخل العمليات على الـ DbContext
+            // ✅ 1. التنفيذ المتسلسل (Sequential Execution)
+            // لحل مشكلة "InvalidOperationException" مع EF Core
 
             var totalMaterials = await _analyticsRepository.GetTotalMaterialsAsync(cancellationToken);
             var lowStock = await _analyticsRepository.GetLowStockCountAsync(cancellationToken);
-            var salesCount = await _analyticsRepository.GetPendingSalesCountAsync(cancellationToken);
-            var revenue = await _analyticsRepository.GetPendingSalesRevenueAsync(cancellationToken);
-            var productionCount = await _analyticsRepository.GetActiveProductionCountAsync(cancellationToken);
+            var activeProduction = await _analyticsRepository.GetActiveProductionCountAsync(cancellationToken);
 
+            // --- البيانات المالية ---
+            var pendingSales = await _analyticsRepository.GetPendingSalesCountAsync(cancellationToken);
+            var totalRevenue = await _analyticsRepository.GetPendingSalesRevenueAsync(cancellationToken);
+
+            // 👇 الجديد: جلب المصروفات
+            var totalExpenses = await _analyticsRepository.GetTotalExpensesAsync(cancellationToken);
+
+            // 👇 الجديد: حساب صافي الربح
+            var netProfit = totalRevenue - totalExpenses;
+
+            // ✅ 2. إرجاع الـ DTO بالبيانات الكاملة
             return new DashboardStatsDto
             {
                 TotalMaterialsCount = totalMaterials,
                 LowStockItemsCount = lowStock,
-                PendingSalesOrders = salesCount,
-                PotentialRevenue = revenue,
-                ActiveProductionOrders = productionCount
+                ActiveProductionOrders = activeProduction,
+
+                PendingSalesOrders = pendingSales,
+                TotalRevenue = totalRevenue,
+
+                // الحقول الجديدة
+                TotalExpenses = totalExpenses,
+                NetProfit = netProfit
             };
         }
     }

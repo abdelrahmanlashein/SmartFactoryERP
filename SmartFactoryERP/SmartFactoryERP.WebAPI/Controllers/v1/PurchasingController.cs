@@ -20,15 +20,15 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
     {
         // --- Suppliers ---
 
-        [HttpPost("suppliers")]
-        public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierCommand command)
+        [HttpPost("suppliers")]  
+        public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierCommand command) // tested
         {
             var supplierId = await Mediator.Send(command);
             return Ok(supplierId);
         }
         // GET api/v1/purchasing/suppliers (Get All)
         [HttpGet("suppliers")]
-        public async Task<IActionResult> GetSuppliersList()
+        public async Task<IActionResult> GetSuppliersList()  //tested
         {
             var suppliersList = await Mediator.Send(new GetSuppliersQuery());
             return Ok(suppliersList);
@@ -36,16 +36,16 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // GET api/v1/purchasing/suppliers/{id} (Get By ID)
         [HttpGet("suppliers/{id}")]
-        public async Task<IActionResult> GetSupplierById(int id)
+        public async Task<IActionResult> GetSupplierById(int id) // tested
         {
             var query = new GetSupplierByIdQuery { Id = id };
             var supplierDto = await Mediator.Send(query);
 
             return Ok(supplierDto);
         }
-        // PUT api/v1/purchasing/suppliers/{id} (Update)
+        // PUT api/v1/purchasing/suppliers/{id} (Update) 
         [HttpPut("suppliers/{id}")]
-        public async Task<IActionResult> UpdateSupplier(int id, [FromBody] UpdateSupplierCommand command)
+        public async Task<IActionResult> UpdateSupplier(int id, [FromBody] UpdateSupplierCommand command) // tested
         {
             // 1. Set the ID from the route for the handler
             if (id != command.Id)
@@ -61,17 +61,17 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         }
         // DELETE api/v1/purchasing/suppliers/{id} (Deactivate/Soft Delete)
         [HttpDelete("suppliers/{id}")]
-        public async Task<IActionResult> DeactivateSupplier(int id)
+        public async Task<IActionResult> DeactivateSupplier(int id) // tested
         {
             // 1. Send the command with the ID from the route
-            await Mediator.Send(new DeactivateSupplierCommand { Id = id });
+            await Mediator.Send(new DeactivateSupplierCommand { Id = id }); 
 
             // 2. Return 204 No Content
             return NoContent();
         }
         // POST api/v1/purchasing/orders (Create PO)
         [HttpPost("orders")]
-        public async Task<IActionResult> CreatePurchaseOrder([FromBody] CreatePurchaseOrderCommand command)
+        public async Task<IActionResult> CreatePurchaseOrder([FromBody] CreatePurchaseOrderCommand command) // tested
         {
             var orderId = await Mediator.Send(command);
             // Returns 201 Created with the ID of the new order
@@ -80,7 +80,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // GET api/v1/purchasing/orders/{id}
         [HttpGet("orders/{id}")]
-        public async Task<IActionResult> GetPurchaseOrderById(int id) 
+        public async Task<IActionResult> GetPurchaseOrderById(int id) // tested
         {
             var query = new GetPurchaseOrderByIdQuery { Id = id };
             var orderDto = await Mediator.Send(query);
@@ -88,7 +88,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(orderDto);
         }
         [HttpGet("orders")]
-        public async Task<IActionResult> GetAllPurchaseOrders()
+        public async Task<IActionResult> GetAllPurchaseOrders() // tested
         {
             var query = new GetAllPurchaseOrdersQuery();
             var ordersList = await Mediator.Send(query);
@@ -114,7 +114,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         // --- NEW ENDPOINT (Action) ---
         // POST api/v1/purchasing/orders/{id}/confirm
         [HttpPost("orders/{id}/confirm")]
-        public async Task<IActionResult> ConfirmPurchaseOrder(int id)
+        public async Task<IActionResult> ConfirmPurchaseOrder(int id)   // tested 
         {
             // 1. Send the command
             await Mediator.Send(new ConfirmPurchaseOrderCommand { Id = id });

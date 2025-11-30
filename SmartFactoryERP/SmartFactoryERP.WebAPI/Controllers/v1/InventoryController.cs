@@ -15,12 +15,12 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
     public class InventoryController : BaseApiController
     {
         [HttpPost("materials")]
-        public async Task<IActionResult> CreateMaterial([FromBody] CreateMaterialCommand command)
+        public async Task<IActionResult> CreateMaterial([FromBody] CreateMaterialCommand command) //tested
         {
             // 2. إرسال الأمر إلى MediatR
             // MediatR سيجد الـ Handler الصحيح (CreateMaterialCommandHandler)
             // وينفذه.
-            var materialId = await Mediator.Send(command);
+            var materialId = await Mediator.Send (command);
 
             // 3. إرجاع الرد
             // ( الأفضل إرجاع CreatedAtRoute للحصول على 201 Created)
@@ -29,7 +29,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // --- الـ Endpoint الجديد ---
         [HttpGet("materials")]
-        public async Task<IActionResult> GetMaterialsList()
+        public async Task<IActionResult> GetMaterialsList() //tested
         {
             // 1. إنشاء الـ Query
             var query = new GetMaterialsListQuery();
@@ -43,7 +43,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // --- الـ Endpoint الجديد ---
         [HttpGet("materials/{id}")] // لاحظ إضافة {id}
-        public async Task<IActionResult> GetMaterialById(int id)
+        public async Task<IActionResult> GetMaterialById(int id) //tested
         {
             // 1. إنشاء الـ Query ووضع الـ Id فيه
             var query = new GetMaterialByIdQuery { Id = id };
@@ -56,7 +56,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         }
         // --- الـ Endpoint الجديد ---
         [HttpPut("materials/{id}")] // HttpPUT للتعديل
-        public async Task<IActionResult> UpdateMaterial(int id, [FromBody] UpdateMaterialCommand command)
+        public async Task<IActionResult> UpdateMaterial(int id, [FromBody] UpdateMaterialCommand command) //tested
         {
             // 1. التأكد أن الـ Id في الـ URL هو نفسه الـ Id في الـ Body (اختياري لكن مهم)
             if (id != command.Id)
@@ -72,7 +72,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         }
         // --- الـ Endpoint الجديد ---
         [HttpDelete("materials/{id}")] // HttpDELETE للحذف
-        public async Task<IActionResult> DeleteMaterial(int id)
+        public async Task<IActionResult> DeleteMaterial(int id) //tested
         {
             // 1. إنشاء الأمر
             var command = new DeleteMaterialCommand { Id = id };
@@ -83,8 +83,9 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             // 3. إرجاع رد (204 No Content هو الرد الأفضل للحذف الناجح)
             return NoContent();
         }
-        [HttpPost("inventory/adjust-stock")] // HttpPOST لعملية تؤثر على الرصيد
-        public async Task<IActionResult> AdjustStock([FromBody] AdjustStockCommand command)
+        //[HttpPost("inventory/adjust-stock")]
+        [HttpPost("adjust-stock")]// HttpPOST لعملية تؤثر على الرصيد
+        public async Task<IActionResult> AdjustStock([FromBody] AdjustStockCommand command) //404
         {
             // 1. إرسال الأمر لـ MediatR
             await Mediator.Send(command); 
@@ -95,7 +96,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         // --- الـ Endpoint الجديد ---
         // هذا يعني "جلب الحركات التابعة للمادة رقم {materialId}"
         [HttpGet("materials/{materialId}/transactions")]
-        public async Task<IActionResult> GetStockTransactions(int materialId)
+        public async Task<IActionResult> GetStockTransactions(int materialId) // depends on adjust stock and goods receipt 
         {
             // 1. إنشاء الـ Query
             var query = new GetStockTransactionsQuery { MaterialId = materialId };

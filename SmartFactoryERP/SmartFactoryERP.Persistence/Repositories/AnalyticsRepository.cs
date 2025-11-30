@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartFactoryERP.Domain.Enums;
-using SmartFactoryERP.Domain.Interfaces.Repositories.SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Domain.Interfaces.Repositories;
 using SmartFactoryERP.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -52,6 +52,11 @@ namespace SmartFactoryERP.Persistence.Repositories
         {
             return await _context.ProductionOrders
                 .CountAsync(p => p.Status == ProductionStatus.Started || p.Status == ProductionStatus.Planned, token);
+        }
+        public async Task<decimal> GetTotalExpensesAsync(CancellationToken token)
+        {
+            // جمع كل المبالغ في جدول المصروفات
+            return await _context.Expenses.SumAsync(e => e.Amount, token);
         }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
-using SmartFactoryERP.Domain.Interfaces.Repositories.SmartFactoryERP.Domain.Interfaces.Repositories;
 using SmartFactoryERP.Persistence.Context;
 using SmartFactoryERP.Persistence.Repositories;
 using System;
@@ -29,6 +28,8 @@ namespace SmartFactoryERP.Persistence
             services.AddScoped<IProductionRepository, ProductionRepository>();
             services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
             services.AddScoped<IHRRepository, HRRepository>();
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>(); // 👈 غالباً نسيت دي
             return services;
         }
     }

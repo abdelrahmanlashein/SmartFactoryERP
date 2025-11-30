@@ -1,11 +1,12 @@
-﻿using SmartFactoryERP.Domain.Entities.Shared;
+﻿using SmartFactoryERP.Domain.Entities.HR___Departments;
+using SmartFactoryERP.Domain.Entities.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartFactoryERP.Domain.Entities.HR___Departments
+namespace SmartFactoryERP.Domain.Entities.HR
 {
 
     public class Employee : BaseAuditableEntity, IAggregateRoot

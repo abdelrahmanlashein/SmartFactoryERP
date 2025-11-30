@@ -15,7 +15,6 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
 
         Task AddStockTransactionAsync(StockTransaction transaction, CancellationToken cancellationToken);
         Task<List<Material>> GetAllMaterialsAsync(CancellationToken cancellationToken);
-        // --- الإضافة الجديدة ---
         Task<List<StockTransaction>> GetTransactionsForMaterialAsync(int materialId, CancellationToken cancellationToken);
     }
 }

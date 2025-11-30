@@ -12,7 +12,8 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
     {
         // POST api/v1/hr/departments
         [HttpPost("departments")]
-        public async Task<IActionResult> CreateDepartment([FromBody] CreateDepartmentCommand command)
+        public async Task<IActionResult> CreateDepartment([FromBody] CreateDepartmentCommand command) //tested
+
         {
             var id = await Mediator.Send(command);
             return Ok(id);
@@ -20,7 +21,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // POST api/v1/hr/employees
         [HttpPost("employees")]
-        public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeCommand command)
+        public async Task<IActionResult> CreateEmployee([FromBody] CreateEmployeeCommand command) //tested
         {
             var id = await Mediator.Send(command);
             return Ok(id);
@@ -29,7 +30,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         // (مستقبلاً سنضيف GET هنا لجلب القوائم)
 
         [HttpGet("employees")]
-        public async Task<IActionResult> GetEmployees()
+        public async Task<IActionResult> GetEmployees() //tested
         {
             return Ok(await Mediator.Send(new GetEmployeesQuery()));
         }
