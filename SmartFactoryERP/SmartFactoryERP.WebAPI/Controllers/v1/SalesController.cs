@@ -4,6 +4,8 @@ using SmartFactoryERP.Application.Features.Sales.Commands.ConfirmSalesOrder;
 using SmartFactoryERP.Application.Features.Sales.Commands.CreateCustomer;
 using SmartFactoryERP.Application.Features.Sales.Commands.CreateSalesOrder;
 using SmartFactoryERP.Application.Features.Sales.Commands.GenerateInvoice;
+using SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Infrastructure.Services.Pdf;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {
