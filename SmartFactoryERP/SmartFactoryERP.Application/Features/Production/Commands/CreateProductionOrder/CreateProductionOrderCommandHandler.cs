@@ -23,8 +23,16 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.CreateProduct
 
         public async Task<int> Handle(CreateProductionOrderCommand request, CancellationToken cancellationToken)
         {
-            // 1. Create the Production Order Entity
-            // The Domain Entity handles the creation logic (Status = Planned, OrderNumber generation)
+            // 👇 1. التحقق: هل هذا المنتج له وصفة (BOM)؟
+            var bom = await _productionRepository.GetBOMForProductAsync(request.ProductId, cancellationToken);
+
+            if (bom == null || bom.Count == 0)
+            {
+                // نرفض الطلب فوراً
+                throw new Exception($"Cannot create order. Product ID {request.ProductId} has no Bill of Materials (Recipe). Please define BOM first.");
+            }
+
+            // 2. لو الوصفة موجودة، نكمل عادي...
             var order = ProductionOrder.Create(
                 request.ProductId,
                 request.Quantity,
@@ -32,10 +40,7 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.CreateProduct
                 request.Notes
             );
 
-            // 2. Add to Repository
             await _productionRepository.AddProductionOrderAsync(order, cancellationToken);
-
-            // 3. Save Changes
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return order.Id;
