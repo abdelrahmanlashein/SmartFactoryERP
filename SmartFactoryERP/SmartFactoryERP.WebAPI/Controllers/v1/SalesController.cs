@@ -7,11 +7,19 @@ using SmartFactoryERP.Application.Features.Sales.Commands.GenerateInvoice;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {
+
     [Route("api/v1/[controller]")]
     [ApiController]
     public class SalesController : BaseApiController
     {
+        private readonly ISalesRepository _salesRepository;
+        private readonly PdfService _pdfService;
         // POST api/v1/sales/customers
+        public SalesController(ISalesRepository salesRepository, PdfService pdfService)
+        {
+            _salesRepository = salesRepository;
+            _pdfService = pdfService;
+        }
         [HttpPost("customers")]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command) //tested
         {
@@ -83,6 +91,23 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         {
             var invoiceId = await Mediator.Send(command);
             return Ok(invoiceId);
+        }
+        // GET api/v1/sales/invoices/{id}/pdf
+        [HttpGet("invoices/{id}/pdf")]
+        public async Task<IActionResult> DownloadInvoicePdf(int id)
+        {
+            // 1. هات البيانات (يفضل استخدام Mediator Query)
+            // InvoiceDto invoice = await Mediator.Send(new GetInvoiceByIdQuery { Id = id });
+            // هنا سنفترض أننا جبنا الـ Entity مباشرة للسرعة (عدلها لتستخدم الـ Mediator)
+            var invoice = await _salesRepository.GetInvoiceByIdAsync(id, CancellationToken.None);
+
+            if (invoice == null) return NotFound("Invoice not found");
+
+            // 2. حولها لـ PDF
+            var pdfBytes = _pdfService.GenerateInvoicePdf(invoice);
+
+            // 3. رجع الملف
+            return File(pdfBytes, "application/pdf", $"Invoice-{invoice.InvoiceNumber}.pdf");
         }
     }
 }
