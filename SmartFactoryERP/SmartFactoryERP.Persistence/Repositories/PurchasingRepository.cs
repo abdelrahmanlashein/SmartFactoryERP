@@ -68,7 +68,7 @@ namespace SmartFactoryERP.Persistence.Repositories
             return await _context.PurchaseOrders
                 .Include(po => po.Items)
                 .Include(po => po.Supplier) // Assuming Supplier is needed for SupplierName in DTO
-                .AsNoTracking() // For read-only query performance
+                //.AsNoTracking() // For read-only query performance
                 .FirstOrDefaultAsync(po => po.Id == id, cancellationToken);
         }
         // --- NEW IMPLEMENTATION ---

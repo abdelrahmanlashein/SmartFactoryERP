@@ -1,9 +1,9 @@
 ﻿using MediatR;
+using SmartFactoryERP.Domain.Enums; // للتأكد من الحالة
+using SmartFactoryERP.Domain.Interfaces;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Application.Features.Purchasing.Commands.ConfirmPurchaseOrder
@@ -21,8 +21,7 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.ConfirmPurcha
 
         public async Task<Unit> Handle(ConfirmPurchaseOrderCommand request, CancellationToken cancellationToken)
         {
-            // 1. Fetch the Purchase Order Aggregate Root (Needs items loaded for validation!)
-            // We reuse GetPurchaseOrderWithItemsAsync
+            // 1. جلب الطلب مع الأصناف (ضروري لأن الـ Domain بيتشيك على الأصناف)
             var order = await _purchasingRepository.GetPurchaseOrderWithItemsAsync(request.Id, cancellationToken);
 
             if (order == null)
@@ -30,17 +29,20 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.ConfirmPurcha
                 throw new Exception($"Purchase Order with Id {request.Id} was not found.");
             }
 
-            // 2. Execute the Domain method (Confirms the order and enforces business rules like "Cannot confirm empty order")
+            // (Check) لو الطلب أصلاً مؤكد، مفيش داعي نعمل حاجة (Idempotency)
+            if (order.Status == PurchaseOrderStatus.Confirmed)
+            {
+                return Unit.Value;
+            }
+
+            // 2. تنفيذ منطق البيزنس (تغيير الحالة + التحقق من الأصناف)
+            // هذه الدالة سترمي Exception لو الأصناف فارغة
             order.Confirm();
 
-            // 3. Save changes (EF Core tracks the status change)
+            // 3. ⚠ أهم سطر: حفظ التغييرات في قاعدة البيانات
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            // Note: In a real system, a Domain Event (e.g., PurchaseOrderConfirmedEvent) would be raised here 
-            // to trigger email notifications, budget allocation, etc.
 
             return Unit.Value;
         }
-        
     }
 }
