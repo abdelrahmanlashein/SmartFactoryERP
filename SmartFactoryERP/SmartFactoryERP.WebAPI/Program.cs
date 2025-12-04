@@ -8,6 +8,8 @@ using SmartFactoryERP.Infrastructure;
 using SmartFactoryERP.Persistence; // 2. ·≈÷«›… Œœ„«  Persistence
 using SmartFactoryERP.Persistence.Context;
 using SmartFactoryERP.Persistence.Services;
+using SmartFactoryERP.WebAPI.Hubs;
+using SmartFactoryERP.WebAPI.Services;
 using System.Text;
 using System.Text.Json.Serialization;
 namespace SmartFactoryERP.WebAPI
