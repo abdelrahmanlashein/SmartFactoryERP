@@ -1,11 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using QuestPDF.Infrastructure;
 using SmartFactoryERP.Application; // 1. ·≈÷«›… Œœ„«  Application
+using SmartFactoryERP.Application.Interfaces.Identity;
+using SmartFactoryERP.Infrastructure;
 using SmartFactoryERP.Persistence; // 2. ·≈÷«›… Œœ„«  Persistence
 using SmartFactoryERP.Persistence.Context;
-using SmartFactoryERP.Infrastructure;
-
+using SmartFactoryERP.Persistence.Services;
+using System.Text;
 using System.Text.Json.Serialization;
-using QuestPDF.Infrastructure;
 namespace SmartFactoryERP.WebAPI
 {
     public class Program
@@ -41,6 +45,31 @@ namespace SmartFactoryERP.WebAPI
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            // 1.  ”ÃÌ· Œœ„… «·‹ Auth
+            builder.Services.AddScoped<IAuthService, AuthService>();
+
+            // 2. ≈⁄œ«œ«  «·‹ JWT Authentication
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+                };
+            });
+
+
             var app = builder.Build();
             // --- 3. ≈⁄œ«œ «·‹ HTTP Pipeline ---
             //if (app.Environment.IsDevelopment())
@@ -56,6 +85,7 @@ namespace SmartFactoryERP.WebAPI
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
+            app.UseAuthentication(); 
             app.UseAuthorization();
 
 
