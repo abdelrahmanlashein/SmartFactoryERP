@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using SmartFactoryERP.Application; // 1. ·≈÷«›… Œœ„«  Application
 using SmartFactoryERP.Persistence; // 2. ·≈÷«›… Œœ„«  Persistence
 using SmartFactoryERP.Persistence.Context;
+using SmartFactoryERP.WebAPI.Hubs;
+using SmartFactoryERP.WebAPI.Services;
 using System.Text.Json.Serialization;
 namespace SmartFactoryERP.WebAPI
 {
@@ -27,6 +29,10 @@ namespace SmartFactoryERP.WebAPI
            // builder.Services.AddSwaggerGen();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            // ######### Register SignalR and the Simulation Service #########
+            builder.Services.AddSignalR();
+            builder.Services.AddHostedService<MachineSimulationService>();
+
 
             var app = builder.Build();
             // --- 3. ≈⁄œ«œ «·‹ HTTP Pipeline ---
@@ -47,6 +53,9 @@ namespace SmartFactoryERP.WebAPI
 
 
             app.MapControllers();
+            //  ######### Map the SignalR Hub here (before app.Run()) #########
+            app.MapHub<MachineHub>("/machineHub");
+
 
             app.Run();
         }
