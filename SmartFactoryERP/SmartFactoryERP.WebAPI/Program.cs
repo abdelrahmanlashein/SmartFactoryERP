@@ -44,6 +44,10 @@ namespace SmartFactoryERP.WebAPI
            // builder.Services.AddSwaggerGen();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            // ######### Register SignalR and the Simulation Service #########
+            builder.Services.AddSignalR();
+            builder.Services.AddHostedService<MachineSimulationService>();
+
 
             // 1.  ”ÃÌ· Œœ„… «·‹ Auth
             builder.Services.AddScoped<IAuthService, AuthService>();
@@ -90,6 +94,9 @@ namespace SmartFactoryERP.WebAPI
 
 
             app.MapControllers();
+            //  ######### Map the SignalR Hub here (before app.Run()) #########
+            app.MapHub<MachineHub>("/machineHub");
+
 
             app.Run();
         }
