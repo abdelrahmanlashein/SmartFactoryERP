@@ -1,4 +1,5 @@
 ﻿using SmartFactoryERP.Domain.Entities.Sales;
+using SmartFactoryERP.Domain.Models.AI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
         Task AddSalesOrderAsync(SalesOrder order, CancellationToken cancellationToken);
         Task<SalesOrder> GetSalesOrderWithItemsAsync(int id, CancellationToken cancellationToken);
         Task AddInvoiceAsync(Invoice invoice, CancellationToken cancellationToken);
+        Task<Invoice> GetInvoiceByIdAsync(int id, CancellationToken token);
+        // ...
+        Task<List<SalesHistoryRecord>> GetSalesHistoryAsync(int productId, CancellationToken token);
+
         // Future: Sales Orders
     }
 }
