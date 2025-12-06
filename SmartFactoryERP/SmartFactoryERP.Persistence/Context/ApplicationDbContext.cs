@@ -38,9 +38,9 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<BillOfMaterial> BillOfMaterials { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        //public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<WorkTask> WorkTasks { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }

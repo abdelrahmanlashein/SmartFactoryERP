@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Models.Analytics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,10 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
             Task<int> GetPendingSalesCountAsync(CancellationToken token);
             Task<decimal> GetPendingSalesRevenueAsync(CancellationToken token);
             Task<int> GetActiveProductionCountAsync(CancellationToken token);
-            Task<decimal> GetTotalExpensesAsync(CancellationToken token); 
+            Task<decimal> GetTotalExpensesAsync(CancellationToken token);
+        Task<List<DailySalesDto>> GetSalesTrendAsync(CancellationToken token);
+        Task<List<TopProductDto>> GetTopSellingProductsAsync(CancellationToken token);
+        Task<List<OrderStatusDto>> GetOrdersStatusDistributionAsync(CancellationToken token);
     }
     
 }

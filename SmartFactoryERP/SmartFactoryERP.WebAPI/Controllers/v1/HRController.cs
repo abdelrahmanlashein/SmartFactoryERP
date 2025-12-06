@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartFactoryERP.Application.Features.HR.Commands.CreateDepartment;
 using SmartFactoryERP.Application.Features.HR.Commands.CreateEmployee;
+using SmartFactoryERP.Application.Features.HR.Commands.ManageAttendance;
 using SmartFactoryERP.Application.Features.HR.Queries.GetDepartments;
 using SmartFactoryERP.Application.Features.HR.Queries.GetEmployee;
+using SmartFactoryERP.Application.Features.HR.Queries.GetTodayAttendanceQuery;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {
@@ -39,6 +41,18 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         public async Task<IActionResult> GetDepartments()
         {
             return Ok(await Mediator.Send(new GetDepartmentsQuery()));
+        }
+        [HttpPost("attendance/toggle")]
+        public async Task<IActionResult> ToggleAttendance([FromBody] ToggleAttendanceCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return Ok(new { message = result });
+        }
+
+        [HttpGet("attendance/today")]
+        public async Task<IActionResult> GetTodayAttendance()
+        {
+            return Ok(await Mediator.Send(new GetTodayAttendanceQuery()));
         }
     }
 }

@@ -9,18 +9,40 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.HR___Departments
 {
-   
-    public class Attendance :BaseEntity
-    {
-        // ID (PK) is from BaseEntity
-        public int EmployeeID { get; set; } // (FK)
-        public DateTime Date { get; set; }
-        public DateTime? CheckInTime { get; set; } // (Nullable في حالة الغياب/الإجازة)
-        public DateTime? CheckOutTime { get; set; } // (Nullable)
-        public double WorkingHours { get; set; } // (يمكن حسابه)
-        public AttendanceStatus Status { get; set; }
 
-        // Navigation Property
-        public virtual Employee Employee { get; set; }
+    public class Attendance : BaseEntity
+    {
+        public int EmployeeId { get; private set; }
+        public DateTime Date { get; private set; } // تاريخ اليوم (بدون وقت)
+        public DateTime? CheckInTime { get; private set; }
+        public DateTime? CheckOutTime { get; private set; }
+
+        // خاصية محسوبة: هل هو متواجد الآن؟
+        public bool IsPresent => CheckInTime.HasValue && !CheckOutTime.HasValue;
+
+        // Navigation
+        public virtual Employee Employee { get; private set; }
+
+        private Attendance() { }
+
+        // تسجيل دخول
+        public static Attendance CreateCheckIn(int employeeId)
+        {
+            return new Attendance
+            {
+                EmployeeId = employeeId,
+                Date = DateTime.UtcNow.Date,
+                CheckInTime = DateTime.UtcNow
+            };
+        }
+
+        // تسجيل خروج
+        public void CheckOut()
+        {
+            if (CheckOutTime.HasValue)
+                throw new Exception("Employee already checked out.");
+
+            CheckOutTime = DateTime.UtcNow;
+        }
     }
 }

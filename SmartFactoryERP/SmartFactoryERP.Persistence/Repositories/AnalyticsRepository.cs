@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartFactoryERP.Domain.Enums;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Domain.Models.Analytics;
 using SmartFactoryERP.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,50 @@ namespace SmartFactoryERP.Persistence.Repositories
         {
             // جمع كل المبالغ في جدول المصروفات
             return await _context.Expenses.SumAsync(e => e.Amount, token);
+        }
+        public async Task<List<DailySalesDto>> GetSalesTrendAsync(CancellationToken token)
+        {
+            // نجمع المبيعات حسب اليوم لآخر 7 أيام
+            var sevenDaysAgo = DateTime.UtcNow.AddDays(-7);
+
+            return await _context.Invoices
+                .Where(i => i.InvoiceDate >= sevenDaysAgo)
+                .GroupBy(i => i.InvoiceDate.Date)
+                .Select(g => new DailySalesDto
+                {
+                    Date = g.Key,
+                    TotalAmount = g.Sum(x => x.TotalAmount)
+                })
+                .OrderBy(x => x.Date)
+                .ToListAsync(token);
+        }
+
+        public async Task<List<TopProductDto>> GetTopSellingProductsAsync(CancellationToken token)
+        {
+            // أكثر 5 منتجات مبيعاً
+            return await _context.SalesOrderItems
+                .GroupBy(i => i.Material.MaterialName)
+                .Select(g => new TopProductDto
+                {
+                    ProductName = g.Key,
+                    QuantitySold = g.Sum(x => x.Quantity)
+                })
+                .OrderByDescending(x => x.QuantitySold)
+                .Take(5)
+                .ToListAsync(token);
+        }
+
+        public async Task<List<OrderStatusDto>> GetOrdersStatusDistributionAsync(CancellationToken token)
+        {
+            // عدد الطلبات لكل حالة
+            return await _context.SalesOrders
+                .GroupBy(o => o.Status)
+                .Select(g => new OrderStatusDto
+                {
+                    Status = g.Key.ToString(),
+                    Count = g.Count()
+                })
+                .ToListAsync(token);
         }
     }
 }

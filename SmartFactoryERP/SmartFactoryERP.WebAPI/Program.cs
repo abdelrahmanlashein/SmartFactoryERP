@@ -31,10 +31,12 @@ namespace SmartFactoryERP.WebAPI
             });
 
             // «” œ⁄«¡ «·„ÌÀÊœ“ „‰ „·›«  DependencyInjection
+            builder.Services.AddSignalR();
             builder.Services.AddApplicationServices(); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
             builder.Services.AddPersistenceServices(builder.Configuration); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
             builder.Services.AddInfrastructureServices(builder.Configuration);
-            builder.Services.AddHttpContextAccessor(); 
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddHostedService<MachineSimulationService>();
             // Add services to the container.
             //builder.Services.AddControllers();
             builder.Services.AddControllers()

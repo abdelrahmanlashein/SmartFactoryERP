@@ -42,7 +42,7 @@ namespace SmartFactoryERP.Persistence
             services.AddScoped<IHRRepository, HRRepository>();
             services.AddScoped<IExpenseRepository, ExpenseRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
-
+            services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             // تأكد إن DemandForecastingService موجود في الـ Infrastructure أو Persistence حسب مكانك الحالي
             // لو هو في Infrastructure، المفروض يتسجل هناك، بس لو نقلته هنا ماشي
             services.AddScoped<IForecastingService, DemandForecastingService>();
