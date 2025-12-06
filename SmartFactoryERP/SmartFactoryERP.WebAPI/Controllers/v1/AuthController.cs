@@ -20,7 +20,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         public async Task<IActionResult> Register(RegistrationRequest request)
         {
             return Ok(await _authService.Register(request));
-        }
+        }  
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(AuthRequest request)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartFactoryERP.Application.Features.HR.Commands.CreateDepartment;
 using SmartFactoryERP.Application.Features.HR.Commands.CreateEmployee;
+using SmartFactoryERP.Application.Features.HR.Queries.GetDepartments;
 using SmartFactoryERP.Application.Features.HR.Queries.GetEmployee;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
@@ -33,6 +34,11 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         public async Task<IActionResult> GetEmployees() //tested
         {
             return Ok(await Mediator.Send(new GetEmployeesQuery()));
+        }
+        [HttpGet("departments")]
+        public async Task<IActionResult> GetDepartments()
+        {
+            return Ok(await Mediator.Send(new GetDepartmentsQuery()));
         }
     }
 }

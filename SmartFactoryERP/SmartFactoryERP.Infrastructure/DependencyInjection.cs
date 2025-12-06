@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartFactoryERP.Application.Interfaces.Identity;
+using SmartFactoryERP.Infrastructure.Services.Identity;
 using SmartFactoryERP.Infrastructure.Services.Pdf;
 using System;
 using System.Collections.Generic;
@@ -15,9 +17,8 @@ namespace SmartFactoryERP.Infrastructure
         {
             // ... (أي خدمات أخرى مسجلة هنا مثل EmailService أو DateTimeService) ...
 
-            // 👇 2. أضف هذا السطر
             services.AddScoped<PdfService>();
-
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             return services;
         }
     }

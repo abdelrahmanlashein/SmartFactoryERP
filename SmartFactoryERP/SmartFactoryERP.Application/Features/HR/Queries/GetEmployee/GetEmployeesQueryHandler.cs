@@ -16,7 +16,19 @@ namespace SmartFactoryERP.Application.Features.HR.Queries.GetEmployee
         public async Task<List<EmployeeDto>> Handle(GetEmployeesQuery request, CancellationToken token)
         {
             var employees = await _hrRepository.GetAllEmployeesAsync(token);
-            return employees.Select(e => new EmployeeDto { Id = e.Id, FullName = e.FullName }).ToList();
+
+            // 👇 التعديل هنا: نقل باقي البيانات للـ DTO
+            return employees.Select(e => new EmployeeDto
+            {
+                Id = e.Id,
+                FullName = e.FullName,
+                JobTitle = e.JobTitle,      // 1. الوظيفة
+                Email = e.Email,            // 2. الإيميل
+                PhoneNumber = e.PhoneNumber,      // 3. الهاتف
+
+                // 4. اسم القسم (مع التأكد أنه ليس null)
+                DepartmentName = e.Department != null ? e.Department.Name : "N/A"
+            }).ToList();
         }
     }
 }

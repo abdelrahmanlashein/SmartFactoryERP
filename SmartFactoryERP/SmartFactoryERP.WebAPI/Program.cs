@@ -34,6 +34,7 @@ namespace SmartFactoryERP.WebAPI
             builder.Services.AddApplicationServices(); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
             builder.Services.AddPersistenceServices(builder.Configuration); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
             builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AddHttpContextAccessor(); 
             // Add services to the container.
             //builder.Services.AddControllers();
             builder.Services.AddControllers()

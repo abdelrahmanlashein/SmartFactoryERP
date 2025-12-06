@@ -10,7 +10,6 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreateGoodsRe
     public class CreateGoodsReceiptCommand : IRequest<int>
     {
         public int PurchaseOrderId { get; set; }
-        public int ReceivedById { get; set; }
         public string Notes { get; set; }
 
         // List of items received
