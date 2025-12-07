@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartFactoryERP.Application.Features.Analytics.DTOs;
 using SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardChartsQuery;
 using SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardStats;
 
@@ -19,6 +20,11 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         public async Task<IActionResult> GetDashboardCharts()
         {
             return Ok(await Mediator.Send(new GetDashboardChartsQuery()));
+        }
+        [HttpGet("production-monitor")]
+        public async Task<IActionResult> GetProductionMonitor()
+        {
+            return Ok(await Mediator.Send(new GetProductionMonitorQuery()));
         }
     } 
 }
