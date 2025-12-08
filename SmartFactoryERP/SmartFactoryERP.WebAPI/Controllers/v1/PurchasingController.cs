@@ -11,6 +11,7 @@ using SmartFactoryERP.Application.Features.Purchasing.Queries.GetGoodsReceiptByI
 using SmartFactoryERP.Application.Features.Purchasing.Queries.GetPurchaseOrderById;
 using SmartFactoryERP.Application.Features.Purchasing.Queries.GetSupplierById;
 using SmartFactoryERP.Application.Features.Purchasing.Queries.GetSuppliers;
+using SmartFactoryERP.Domain.Models.Analytics;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {

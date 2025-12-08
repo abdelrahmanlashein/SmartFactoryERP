@@ -1,13 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SmartFactoryERP.Application.Interfaces.Services;
 using SmartFactoryERP.Application.Interfaces.Identity;
+using SmartFactoryERP.Infrastructure.Services.Email;
 using SmartFactoryERP.Infrastructure.Services.Identity;
-using SmartFactoryERP.Infrastructure.Services.Pdf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SmartFactoryERP.Domain.Entities;
 
 namespace SmartFactoryERP.Infrastructure
 {
@@ -15,10 +12,15 @@ namespace SmartFactoryERP.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // ... (أي خدمات أخرى مسجلة هنا مثل EmailService أو DateTimeService) ...
+            // Email Service
+            services.AddScoped<IEmailService, EmailService>();
+            
+            // JWT Token Generator
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
-            services.AddScoped<PdfService>();
+            // ✅ Current User Service (NEW)
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+
             return services;
         }
     }

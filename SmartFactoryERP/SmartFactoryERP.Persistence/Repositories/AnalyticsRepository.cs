@@ -103,5 +103,24 @@ namespace SmartFactoryERP.Persistence.Repositories
                 })
                 .ToListAsync(token);
         }
+
+        public async Task<List<LowStockMaterialDto>> GetCriticalRawMaterialsAsync(int count, CancellationToken token)
+        {
+            return await _context.Materials
+                // 1. فلتر: نوعها خامة + الرصيد أقل من أو يساوي حد الطلب
+                .Where(m => m.MaterialType == MaterialType.RawMaterial && m.CurrentStockLevel <= m.MinimumStockLevel)
+                .OrderBy(m => m.CurrentStockLevel) // الأقل رصيداً يظهر أولاً
+                .Take(count) // هات أهم 5 مثلاً
+                .Select(m => new LowStockMaterialDto
+                {
+                    MaterialId = m.Id,
+                    Name = m.MaterialName,
+                    CurrentStock = m.CurrentStockLevel,
+                    ReorderLevel = m.MinimumStockLevel,
+                    Unit = m.UnitOfMeasure
+                })
+                .AsNoTracking()
+                .ToListAsync(token);
+        }
     }
 }

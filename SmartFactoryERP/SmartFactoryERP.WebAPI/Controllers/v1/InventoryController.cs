@@ -107,5 +107,34 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             // 3. إرجاع النتيجة
             return Ok(transactionsList);
         }
+
+        // --- الـ Endpoint الجديد ---
+        // هذا يعني "جلب المواد التامة" أو "السلع المنتهية"
+        [HttpGet("materials/finished-goods")]
+        public async Task<IActionResult> GetFinishedGoods() //tested
+        {
+            // 1. إنشاء الـ Query
+            var query = new GetMaterialsListQuery(); // يمكنك استخدام نفس الـ Query إذا كانت السلع التامة هي مواد عادية في النظام
+
+            // 2. إرساله لـ MediatR
+            var finishedGoodsList = await Mediator.Send(query); // قد تحتاج إلى تعديل في الـ Handler ليرد فقط السلع المنتهية
+
+            // 3. إرجاع النتيجة
+            return Ok(finishedGoodsList);
+        }
+        // --- الـ Endpoint الجديد ---
+        // هذا يعني "جلب المواد الخام" أو "السلع غير المكتملة"
+        [HttpGet("materials/raw-materials")]
+        public async Task<IActionResult> GetRawMaterials() //tested
+        {
+            // 1. إنشاء الـ Query
+            var query = new GetMaterialsListQuery(); // يمكنك استخدام نفس الـ Query إذا كانت المواد الخام هي مواد عادية في النظام
+
+            // 2. إرساله لـ MediatR
+            var rawMaterialsList = await Mediator.Send(query); // قد تحتاج إلى تعديل في الـ Handler ليرد فقط المواد الخام
+
+            // 3. إرجاع النتيجة
+            return Ok(rawMaterialsList);
+        }
     }
-}
+}   

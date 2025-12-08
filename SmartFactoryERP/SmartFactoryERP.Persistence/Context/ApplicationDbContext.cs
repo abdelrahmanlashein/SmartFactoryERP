@@ -8,23 +8,16 @@ using SmartFactoryERP.Domain.Entities.Production;
 using SmartFactoryERP.Domain.Entities.Purchasing;
 using SmartFactoryERP.Domain.Entities.Sales;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using SmartFactoryERP.Persistence.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SmartFactoryERP.Domain.Entities.Identity;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Persistence.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        // 1. تعريف الجداول
         public DbSet<Material> Materials { get; set; }
         public DbSet<StockTransaction> StockTransactions { get; set; }
         public DbSet<StockAlert> StockAlerts { get; set; }
-        // --- Purchasing (New) ---
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
@@ -41,16 +34,34 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<WorkTask> WorkTasks { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
+        
+        // ✅ إضافة جدول RefreshTokens
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
-        // 2. هذه الميثود ستقرأ ملفات الـ Configuration تلقائياً
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            
+            // ✅ تكوين جدول RefreshTokens
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.ToTable("RefreshTokens", "Identity");
+                entity.HasKey(rt => rt.Id);
+                entity.Property(rt => rt.Token).IsRequired().HasMaxLength(500);
+                entity.Property(rt => rt.JwtId).IsRequired().HasMaxLength(500);
+                entity.HasIndex(rt => rt.Token).IsUnique();
+                
+                // العلاقة مع ApplicationUser
+                entity.HasOne(rt => rt.User)
+                      .WithMany()
+                      .HasForeignKey(rt => rt.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 }

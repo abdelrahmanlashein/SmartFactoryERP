@@ -13,5 +13,10 @@ namespace SmartFactoryERP.Application.Features.Identity.Models
         public string FullName { get; set; }
         public string Token { get; set; }
         public int? EmployeeId { get; set; }
+        public List<string> Roles { get; set; } = new();
+        
+        // ✅ إضافة RefreshToken
+        public string RefreshToken { get; set; }
+        public DateTime TokenExpiresAt { get; set; }
     }
 }

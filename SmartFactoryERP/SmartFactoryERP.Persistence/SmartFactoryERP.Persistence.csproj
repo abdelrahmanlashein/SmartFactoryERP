@@ -21,4 +21,8 @@
     <ProjectReference Include="..\SmartFactoryERP.Infrastructure\SmartFactoryERP.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Identity\" />
+  </ItemGroup>
+
 </Project>

@@ -1,22 +1,25 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+Ôªøusing Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuestPDF.Infrastructure;
-using SmartFactoryERP.Application; // 1. ·≈÷«›… Œœ„«  Application
+using SmartFactoryERP.Application;
 using SmartFactoryERP.Application.Interfaces.Identity;
 using SmartFactoryERP.Infrastructure;
-using SmartFactoryERP.Persistence; // 2. ·≈÷«›… Œœ„«  Persistence
+using SmartFactoryERP.Persistence;
 using SmartFactoryERP.Persistence.Context;
+using SmartFactoryERP.Persistence.Seeds; // ‚úÖ ÿ•ÿ∂ÿßŸÅÿ©
 using SmartFactoryERP.Persistence.Services;
 using SmartFactoryERP.WebAPI.Hubs;
 using SmartFactoryERP.WebAPI.Services;
 using System.Text;
 using System.Text.Json.Serialization;
+
 namespace SmartFactoryERP.WebAPI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args) // ‚úÖ ÿ™ÿ∫ŸäŸäÿ± ÿ•ŸÑŸâ async Task
         {
 
             QuestPDF.Settings.License = LicenseType.Community;
@@ -24,40 +27,30 @@ namespace SmartFactoryERP.WebAPI
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", // «Õ›Ÿ «·«”„ œÂ ﬂÊÌ”
+                options.AddPolicy("AllowAll",
                     b => b.AllowAnyOrigin()
                           .AllowAnyMethod()
                           .AllowAnyHeader());
             });
 
-            // «” œ⁄«¡ «·„ÌÀÊœ“ „‰ „·›«  DependencyInjection
             builder.Services.AddSignalR();
-            builder.Services.AddApplicationServices(); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
-            builder.Services.AddPersistenceServices(builder.Configuration); // ”‰‰‘∆ Â–Â «·„ÌÀÊœ
+            builder.Services.AddApplicationServices();
+            builder.Services.AddPersistenceServices(builder.Configuration);
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHostedService<MachineSimulationService>();
-            // Add services to the container.
-            //builder.Services.AddControllers();
+
             builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        // Â–« «·”ÿ— Ì„‰⁄ «·œÊ«∆— «·„›—€… «· Ì  ”»» «·‹ Crash
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    });
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                });
+
             builder.Services.AddEndpointsApiExplorer();
-           // builder.Services.AddSwaggerGen();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-            // ######### Register SignalR and the Simulation Service #########
-            builder.Services.AddSignalR();
-            builder.Services.AddHostedService<MachineSimulationService>();
 
-
-            // 1.  ”ÃÌ· Œœ„… «·‹ Auth
             builder.Services.AddScoped<IAuthService, AuthService>();
 
-            // 2. ≈⁄œ«œ«  «·‹ JWT Authentication
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -78,15 +71,15 @@ namespace SmartFactoryERP.WebAPI
                 };
             });
 
-
             var app = builder.Build();
-            // --- 3. ≈⁄œ«œ «·‹ HTTP Pipeline ---
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI();
-            //}
-            // Configure the HTTP request pipeline.
+
+            // ‚úÖ ÿ™ŸÜŸÅŸäÿ∞ Role Seeding ÿπŸÜÿØ ÿ®ÿØÿ° ÿßŸÑÿ™ÿ∑ÿ®ŸäŸÇ
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                await RoleSeeder.SeedRoles(roleManager);
+            }
+
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
@@ -94,14 +87,11 @@ namespace SmartFactoryERP.WebAPI
 
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
-            app.UseAuthentication(); 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-
             app.MapControllers();
-            //  ######### Map the SignalR Hub here (before app.Run()) #########
             app.MapHub<MachineHub>("/machineHub");
-
 
             app.Run();
         }

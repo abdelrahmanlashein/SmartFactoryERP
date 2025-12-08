@@ -29,6 +29,7 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
         Task<List<DailySalesDto>> GetSalesTrendAsync(CancellationToken token);
         Task<List<TopProductDto>> GetTopSellingProductsAsync(CancellationToken token);
         Task<List<OrderStatusDto>> GetOrdersStatusDistributionAsync(CancellationToken token);
+        Task<List<LowStockMaterialDto>> GetCriticalRawMaterialsAsync(int count, CancellationToken token);
     }
     
 }

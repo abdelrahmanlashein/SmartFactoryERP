@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using SmartFactoryERP.Application.Interfaces.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Infrastructure.Services.Identity
 {
+    /// <summary>
+    /// خدمة للحصول على معلومات المستخدم الحالي من JWT Token
+    /// </summary>
     public class CurrentUserService : ICurrentUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -18,18 +16,33 @@ namespace SmartFactoryERP.Infrastructure.Services.Identity
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        /// <summary>
+        /// الحصول على UserId من الـ Token (Claim: NameIdentifier)
+        /// </summary>
+        public string UserId
+        {
+            get
+            {
+                var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                return userId ?? string.Empty;
+            }
+        }
 
+        /// <summary>
+        /// الحصول على EmployeeId من الـ Token (Claim: "EmployeeId")
+        /// </summary>
         public int? EmployeeId
         {
             get
             {
-                // بنقرا الـ Claim اللي اسمه "EmployeeId" اللي حطيناه في التوكن
-                var claim = _httpContextAccessor.HttpContext?.User?.FindFirst("EmployeeId");
-                if (claim != null && int.TryParse(claim.Value, out int id))
-                {
-                    return id;
-                }
+                var employeeIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("EmployeeId")?.Value;
+                
+                if (string.IsNullOrEmpty(employeeIdClaim))
+                    return null;
+
+                if (int.TryParse(employeeIdClaim, out var employeeId))
+                    return employeeId;
+
                 return null;
             }
         }

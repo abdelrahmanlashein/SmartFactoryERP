@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartFactoryERP.Domain.Models.Analytics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,8 @@ namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardSta
         public decimal TotalRevenue { get; set; }   // إجمالي المبيعات (Confirmed/Invoiced)
         public decimal TotalExpenses { get; set; }  // إجمالي المصروفات
         public decimal NetProfit { get; set; }      // صافي الربح (Revenue - Expenses)
+
+        // --- المواد الخام الحرجة ---
+        public List<LowStockMaterialDto> CriticalRawMaterials { get; set; } // قائمة المواد تحت الحد الآمن
     }
 }

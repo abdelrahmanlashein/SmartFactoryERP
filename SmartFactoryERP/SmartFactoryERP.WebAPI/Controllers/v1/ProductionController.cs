@@ -16,16 +16,24 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         [HttpPost("bom")]
         public async Task<IActionResult> CreateBillOfMaterial([FromBody] CreateBillOfMaterialCommand command) //tested
         {
-            var bomId = await Mediator.Send(command);
-            return Ok(bomId);
+            var componentsCount = await Mediator.Send(command);
+            return Ok(new 
+            { 
+                message = $"{componentsCount} component(s) added to BOM successfully",
+                productId = command.ProductId,
+                componentsAdded = componentsCount
+            });
         }
     
     #region test 
     /*
-     * How to Test (Postman)
+     * How to Test (Postman) - UPDATED FOR MULTIPLE COMPONENTS
 To test this, you need to set up your inventory data first.
 
-Scenario: You want to define that 1 Table (Product) requires 4 Legs (Component).
+Scenario: You want to define that 1 Dining Table requires multiple components:
+- 4 Table Legs
+- 1 Table Top  
+- 8 Screws  
 
 Prerequisite (Inventory):
 

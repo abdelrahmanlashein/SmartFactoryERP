@@ -33,6 +33,9 @@ namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardSta
             // 👇 الجديد: حساب صافي الربح
             var netProfit = totalRevenue - totalExpenses;
 
+            // 👇 الجديد: جلب المواد الخام الحرجة (أهم 5 خامات تحت الحد الآمن)
+            var criticalMaterials = await _analyticsRepository.GetCriticalRawMaterialsAsync(5, cancellationToken);
+
             // ✅ 2. إرجاع الـ DTO بالبيانات الكاملة
             return new DashboardStatsDto
             {
@@ -45,7 +48,8 @@ namespace SmartFactoryERP.Application.Features.Analytics.Queries.GetDashboardSta
 
                 // الحقول الجديدة
                 TotalExpenses = totalExpenses,
-                NetProfit = netProfit
+                NetProfit = netProfit,
+                CriticalRawMaterials = criticalMaterials // 👈 القائمة الجديدة
             };
         }
     }
