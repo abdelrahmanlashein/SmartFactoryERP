@@ -15,11 +15,17 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
         Task<Customer> GetCustomerByIdAsync(int id, CancellationToken cancellationToken);
         Task<List<Customer>> GetAllCustomersAsync(CancellationToken cancellationToken);
         Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken);
+        
+        // Sales Order Methods
         Task AddSalesOrderAsync(SalesOrder order, CancellationToken cancellationToken);
         Task<SalesOrder> GetSalesOrderWithItemsAsync(int id, CancellationToken cancellationToken);
+        Task<List<SalesOrder>> GetAllSalesOrdersAsync(CancellationToken cancellationToken);
+        
+        // Invoice Methods
         Task AddInvoiceAsync(Invoice invoice, CancellationToken cancellationToken);
         Task<Invoice> GetInvoiceByIdAsync(int id, CancellationToken token);
-        // ...
+        
+        // Sales History Methods
         Task<List<SalesHistoryRecord>> GetSalesHistoryAsync(int productId, CancellationToken token);
 
         // Future: Sales Orders
