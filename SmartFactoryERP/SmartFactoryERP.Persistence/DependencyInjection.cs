@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartFactoryERP.Application.Interfaces.Identity;
+using SmartFactoryERP.Domain.Entities.Identity;
 using SmartFactoryERP.Domain.Interfaces.AI;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
-using SmartFactoryERP.Domain.Entities.Identity;
 using SmartFactoryERP.Infrastructure.Services.AI;
+using SmartFactoryERP.Infrastructure.Services.Pdf;
 using SmartFactoryERP.Persistence.Context;
 using SmartFactoryERP.Persistence.Repositories;
 using SmartFactoryERP.Persistence.Services;
@@ -59,7 +60,7 @@ namespace SmartFactoryERP.Persistence
             services.AddScoped<IAttendanceRepository, AttendanceRepository>();
             services.AddScoped<IForecastingService, DemandForecastingService>();
             services.AddScoped<IAuthService, AuthService>();
-
+            services.AddScoped<PdfService>();
             return services;
         }
     }

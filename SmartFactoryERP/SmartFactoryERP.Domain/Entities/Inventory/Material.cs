@@ -8,83 +8,85 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.Inventory
 {
-  
-    
-        public class Material : BaseAuditableEntity, IAggregateRoot
-        {
-            public string MaterialCode { get; private set; }
-            public string MaterialName { get; private set; }
-            public MaterialType MaterialType { get; private set; }
-            public string UnitOfMeasure { get; private set; }
-            public decimal UnitPrice { get; private set; }
-            public int MinimumStockLevel { get; private set; }
-            public int CurrentStockLevel { get; private set; }
-            public bool IsDeleted { get; private set; } 
+    public class Material : BaseAuditableEntity, IAggregateRoot
+    {
+        public string MaterialCode { get; private set; }
+        public string MaterialName { get; private set; }
+        public MaterialType MaterialType { get; private set; }
+        public string UnitOfMeasure { get; private set; }
+        public decimal UnitPrice { get; private set; }
+        public decimal MinimumStockLevel { get; private set; }  // ✅ تغيير من int إلى decimal
+        public decimal CurrentStockLevel { get; private set; }  // ✅ تغيير من int إلى decimal
+        public bool IsDeleted { get; private set; }
 
         // لإجبار EF Core على استخدامه
-        private Material() { } 
+        private Material() { }
 
-            // "Factory Method" لضمان إنشاء سليم
-            public static Material CreateNew(
-                string code,
-                string name,
-                MaterialType type,
-                string uom,
-                decimal unitPrice,
-                int minStock)
-            { 
-                // هنا تضع قواعد البيزنس
-                if (string.IsNullOrWhiteSpace(code))
-                    throw new Exception("Material Code is required."); // استخدم DomainException المخصص
+        // "Factory Method" لضمان إنشاء سليم
+        public static Material CreateNew(
+            string code,
+            string name,
+            MaterialType type,
+            string uom,
+            decimal unitPrice,
+            decimal minStock)  // ✅ تغيير من int إلى decimal
+        {
+            // هنا تضع قواعد البيزنس
+            if (string.IsNullOrWhiteSpace(code))
+                throw new Exception("Material Code is required."); // استخدم DomainException المخصص
 
-                if (unitPrice < 0)
-                    throw new Exception("Unit Price cannot be negative.");
+            if (unitPrice < 0)
+                throw new Exception("Unit Price cannot be negative.");
 
-                var material = new Material
-                {
-                    MaterialCode = code,
-                    MaterialName = name,
-                    MaterialType = type,
-                    UnitOfMeasure = uom,
-                    UnitPrice = unitPrice,
-                    MinimumStockLevel = minStock,
-                    CurrentStockLevel = 0 // القاعدة: أي مادة جديدة رصيدها صفر
-                };
-                return material;
-            }
+            if (minStock < 0)
+                throw new Exception("Minimum Stock Level cannot be negative.");
 
-            // Business Logic Methods
-            public void UpdatePrice(decimal newPrice)
+            var material = new Material
             {
-                if (newPrice < 0)
-                    throw new Exception("Unit Price cannot be negative.");
+                MaterialCode = code,
+                MaterialName = name,
+                MaterialType = type,
+                UnitOfMeasure = uom,
+                UnitPrice = unitPrice,
+                MinimumStockLevel = minStock,
+                CurrentStockLevel = 0 // القاعدة: أي مادة جديدة رصيدها صفر
+            };
+            return material;
+        }
 
-                UnitPrice = newPrice;
-            }
+        // Business Logic Methods
+        public void UpdatePrice(decimal newPrice)
+        {
+            if (newPrice < 0)
+                throw new Exception("Unit Price cannot be negative.");
 
-            public void IncreaseStock(int quantity)
-            {
-                if (quantity <= 0)
-                    throw new Exception("Quantity to increase must be positive.");
+            UnitPrice = newPrice;
+        }
 
-                CurrentStockLevel += quantity;
-            }
+        public void IncreaseStock(decimal quantity)  // ✅ تغيير من int إلى decimal
+        {
+            if (quantity <= 0)
+                throw new Exception("Quantity to increase must be positive.");
 
-            public void DecreaseStock(int quantity)
-            {
-                if (quantity <= 0)
-                    throw new Exception("Quantity to decrease must be positive.");
+            CurrentStockLevel += quantity;
+        }
 
-                if (CurrentStockLevel - quantity < 0)
-                    throw new Exception("Insufficient stock."); // استخدم InsufficientStockException
+        public void DecreaseStock(decimal quantity)  // ✅ تغيير من int إلى decimal
+        {
+            if (quantity <= 0)
+                throw new Exception("Quantity to decrease must be positive.");
 
-                CurrentStockLevel -= quantity;
-            }
+            if (CurrentStockLevel - quantity < 0)
+                throw new Exception("Insufficient stock."); // استخدم InsufficientStockException
+
+            CurrentStockLevel -= quantity;
+        }
+
         public void UpdateDetails(
-    string newName,
-    string newUom,
-    decimal newPrice,
-    int newMinStock)
+            string newName,
+            string newUom,
+            decimal newPrice,
+            decimal newMinStock)  // ✅ تغيير من int إلى decimal
         {
             // هنا نضع "قواعد البيزنس" الخاصة بالتعديل
             if (string.IsNullOrWhiteSpace(newName))
@@ -93,6 +95,9 @@ namespace SmartFactoryERP.Domain.Entities.Inventory
             if (newPrice < 0)
                 throw new Exception("Unit Price cannot be negative.");
 
+            if (newMinStock < 0)
+                throw new Exception("Minimum Stock Level cannot be negative.");
+
             MaterialName = newName;
             UnitOfMeasure = newUom;
             UnitPrice = newPrice;
@@ -100,6 +105,7 @@ namespace SmartFactoryERP.Domain.Entities.Inventory
 
             // (ملاحظة: لا نسمح بتعديل MaterialCode أو MaterialType هنا)
         }
+
         // --- الإضافة الجديدة ---
         public void Delete()
         {
@@ -112,5 +118,4 @@ namespace SmartFactoryERP.Domain.Entities.Inventory
             IsDeleted = true;
         }
     }
-    }
-
+}

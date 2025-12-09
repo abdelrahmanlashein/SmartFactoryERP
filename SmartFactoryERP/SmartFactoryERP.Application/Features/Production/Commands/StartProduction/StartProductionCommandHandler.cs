@@ -53,13 +53,12 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.StartProducti
                 // محاولة خصم الكمية (الكيان الذكي سيرمي خطأ لو الرصيد غير كافٍ)
                 try
                 {
-                    // هنا نحول الكمية لـ int لأننا بنينا المخزون بـ int، 
-                    // لو كانت الكميات كسور عشرية يفضل تعديل المخزون لـ decimal
-                    material.DecreaseStock((int)requiredQuantity);
+                    // ✅ الآن نمرر decimal مباشرة بدون تحويل
+                    material.DecreaseStock(requiredQuantity);
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Insufficient stock for material '{material.MaterialName}'. Required: {requiredQuantity}, Available: {material.CurrentStockLevel}");
+                    throw new Exception($"Insufficient stock for material '{material.MaterialName}'. Required: {requiredQuantity:F2}, Available: {material.CurrentStockLevel:F2}");
                 }
             }
 

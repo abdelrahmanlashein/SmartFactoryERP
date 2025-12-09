@@ -10,9 +10,9 @@ namespace SmartFactoryERP.Domain.Models.Analytics
     {
         public int MaterialId { get; set; }
         public string Name { get; set; }
-        public double CurrentStock { get; set; }
-        public double ReorderLevel { get; set; }
+        public decimal CurrentStock { get; set; }
+        public decimal ReorderLevel { get; set; }
         public string Unit { get; set; }
-        public double Shortage => ReorderLevel - CurrentStock; // الكمية المطلوبة للوصول للحد الآمن
+        public decimal Shortage => ReorderLevel - CurrentStock; // الكمية المطلوبة للوصول للحد الآمن
     }
 }

@@ -14,7 +14,7 @@ namespace SmartFactoryERP.Application.Features.Inventory.Queries.GetMaterialsLis
         public string MaterialType { get; set; } // هنرجعه string عشان الـ UI
         public string UnitOfMeasure { get; set; }
         public decimal UnitPrice { get; set; }
-        public int CurrentStockLevel { get; set; }
-        public int MinimumStockLevel { get; set; }
+        public decimal CurrentStockLevel { get; set; }  // ✅ تغيير من int إلى decimal
+        public decimal MinimumStockLevel { get; set; }  // ✅ تغيير من int إلى decimal
     }
 }

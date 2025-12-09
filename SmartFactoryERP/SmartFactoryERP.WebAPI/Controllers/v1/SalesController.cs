@@ -22,6 +22,15 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             _salesRepository = salesRepository;
             _pdfService = pdfService;
         }
+
+        // GET api/v1/sales/customers
+        [HttpGet("customers")]
+        public async Task<IActionResult> GetCustomers(CancellationToken cancellationToken)
+        {
+            var customers = await _salesRepository.GetAllCustomersAsync(cancellationToken);
+            return Ok(customers);
+        }
+
         [HttpPost("customers")]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command) //tested
         {
@@ -29,28 +38,9 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(customerId);
         }
         #region Test
-        ///* 
-        //             * 🧪 Test Data for Postman
-        //    Once you Rebuild and Run the project, test it immediately.
+       
 
-        //    Method: POST
-
-        //    URL: https://localhost:7093/api/v1/sales/customers
-
-        //    Body (JSON):
-
-        //    JSON
-
-        //    {
-        //     "customerName": "Global Tech Industries",
-        //     "email": "procurement@globaltech.com",
-        //     "phoneNumber": "+1-555-0199",
-        //     "address": "456 Innovation Blvd, Silicon Valley",
-        //     "taxNumber": "TX-987654321",
-        //     "creditLimit": 50000.00
-        //    }
-        //    Expected Result: 200 OK with the new ID.
-        // */ 
+     
 
         #endregion
         // POST api/v1/sales/orders
@@ -62,21 +52,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(orderId);
         }
         #region Test
-        // https://localhost:7093/api/v1/sales/orders
-        //        {
-        //  "customerId": 1,
-        //  "items": [
-        //    {
-        //      "materialId": 1,
-        //      "quantity": 10,
-        //      "unitPrice": 1200.50
-        //    },
-        //    {
-        //      "materialId": 1,
-        //      "quantity": 5,
-        //      "unitPrice": 1200.50
-        //    }
-        //  ]
+        
         //}
         #endregion
 

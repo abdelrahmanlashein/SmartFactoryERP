@@ -46,18 +46,18 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreateGoodsRe
             }
 
             // 👇 2. الحصول على رقم الموظف من التوكن (الذكاء هنا)
-            var employeeId = _currentUserService.EmployeeId;
+            // 👇 2. استخدام الموظف المحدد من الـ request
+            var employeeId = request.ReceivedById;
 
-            if (!employeeId.HasValue)
+            if (employeeId <= 0)
             {
-                // هذا يعني أن المستخدم الحالي (Admin مثلاً) لم يتم ربطه بموظف في جدول HR
-                throw new Exception("Current User is not linked to an Employee record. Cannot sign receipt.");
+                throw new Exception("Invalid Employee ID. Please select who received the goods.");
             }
 
             // 3. إنشاء إذن الاستلام باستخدام ID الموظف الأوتوماتيكي
             var receipt = GoodsReceipt.Create(
                 request.PurchaseOrderId,
-                employeeId.Value, // ✅ نستخدم القيمة من التوكن
+                employeeId, // ✅ نستخدم القيمة من التوكن
                 request.Notes
             );
 
