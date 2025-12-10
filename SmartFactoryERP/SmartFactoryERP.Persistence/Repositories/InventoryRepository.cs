@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Persistence.Repositories
@@ -19,9 +20,9 @@ namespace SmartFactoryERP.Persistence.Repositories
             _context = context;
         }
 
+        // ... (الدوال القديمة)
         public async Task AddMaterialAsync(Material material, CancellationToken cancellationToken)
         {
-            // فقط أضفه للـ context. الـ UnitOfWork هو من سيحفظ.
             await _context.Materials.AddAsync(material, cancellationToken);
         }
 
@@ -33,28 +34,62 @@ namespace SmartFactoryERP.Persistence.Repositories
 
         public async Task<Material?> GetMaterialByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _context.Materials.FindAsync(new object[] { id }, cancellationToken);
+            // ✅ مهم: لا نستخدم FindAsync هنا، بل نستخدم FirstOrDefaultAsync ونعمل تتبع (Tracking)
+            // لكي يتم تحديث الرصيد الحالي (CurrentStockLevel)
+            return await _context.Materials
+                .Where(m => m.Id == id)
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
         public async Task AddStockTransactionAsync(StockTransaction transaction, CancellationToken cancellationToken)
         {
             await _context.StockTransactions.AddAsync(transaction, cancellationToken);
         }
+
         public async Task<List<Material>> GetAllMaterialsAsync(CancellationToken cancellationToken)
         {
             return await _context.Materials
-                .AsNoTracking() // مهم: للقراءة فقط عشان الأداء
-                .OrderBy(m => m.MaterialCode) // نرتبهم مثلاً
+                .AsNoTracking()
+                .OrderBy(m => m.MaterialCode)
                 .ToListAsync(cancellationToken);
         }
-        // --- التنفيذ الجديد ---
+
         public async Task<List<StockTransaction>> GetTransactionsForMaterialAsync(int materialId, CancellationToken cancellationToken)
         {
             return await _context.StockTransactions
-                .Where(t => t.MaterialID == materialId) // فلترة بالمادة المحددة
+                .Where(t => t.MaterialID == materialId)
                 .AsNoTracking()
-                .OrderByDescending(t => t.TransactionDate) // الأحدث أولاً
+                .OrderByDescending(t => t.TransactionDate)
                 .ToListAsync(cancellationToken);
+        }
+
+        // ----------------------------------------------------------------------
+        // ✅✅ التنفيذ الجديد: DeductStockAsync (الخصم الفعلي للمخزون) ✅✅
+        // ----------------------------------------------------------------------
+        public async Task DeductStockAsync(int materialId, decimal quantity, CancellationToken cancellationToken)
+        {
+            // 1. جلب المادة مع تتبعها
+            var material = await GetMaterialByIdAsync(materialId, cancellationToken);
+
+            if (material == null)
+            {
+                throw new Exception($"Material with ID {materialId} not found in inventory.");
+            }
+
+            // 2. التحقق من الرصيد والخصم (Domain Logic)
+            // هذه الدالة ستحدث CurrentStockLevel في الـ Material Entity وترمي Exception لو الرصيد غير كافٍ
+            material.DecreaseStock(quantity);
+
+            // 3. تسجيل حركة المخزون
+            var transaction = StockTransaction.CreateUsage(
+                materialId: material.Id,
+                quantity: quantity,
+                notes: $"Usage for Production Order"
+            );
+
+            await AddStockTransactionAsync(transaction, cancellationToken);
+
+            // لا نحفظ التغييرات هنا، بل الـ UnitOfWork هو من سيتولى حفظ تحديث Material وتحديث StockTransaction.
         }
     }
 }

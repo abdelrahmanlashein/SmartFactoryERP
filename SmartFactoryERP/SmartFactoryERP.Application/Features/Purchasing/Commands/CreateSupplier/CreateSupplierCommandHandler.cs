@@ -41,8 +41,8 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreateSupplie
                 request.SupplierCode,
                 request.SupplierName,
                 request.ContactPerson,
-                request.PhoneNumber,
-                request.Email,
+                request.Email,       // ✅ التصحيح: الإيميل يتبعت الأول (مكان Parameter رقم 4)
+                request.PhoneNumber, // ✅ التصحيح: التليفون يتبعت بعده (مكان Parameter رقم 5)
                 request.Address
             );
 

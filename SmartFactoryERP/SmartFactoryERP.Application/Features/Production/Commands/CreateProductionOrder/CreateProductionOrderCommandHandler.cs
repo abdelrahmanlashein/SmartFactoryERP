@@ -3,10 +3,9 @@ using SmartFactoryERP.Domain.Entities.Production;
 using SmartFactoryERP.Domain.Interfaces;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace SmartFactoryERP.Application.Features.Production.Commands.CreateProductionOrder
 {
@@ -23,24 +22,33 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.CreateProduct
 
         public async Task<int> Handle(CreateProductionOrderCommand request, CancellationToken cancellationToken)
         {
-            // 👇 1. التحقق: هل هذا المنتج له وصفة (BOM)؟
-            var bom = await _productionRepository.GetBOMForProductAsync(request.ProductId, cancellationToken);
-
-            if (bom == null || bom.Count == 0)
-            {
-                // نرفض الطلب فوراً
-                throw new Exception($"Cannot create order. Product ID {request.ProductId} has no Bill of Materials (Recipe). Please define BOM first.");
-            }
-
-            // 2. لو الوصفة موجودة، نكمل عادي...
+            // 1. إنشاء الأوردر الأساسي
             var order = ProductionOrder.Create(
                 request.ProductId,
                 request.Quantity,
                 request.StartDate,
-                request.Notes
+                request.Notes,
+                request.Priority ?? "Medium"
             );
 
-            await _productionRepository.AddProductionOrderAsync(order, cancellationToken);
+            // ✅✅ 2. إلغاء البحث عن BOM قديمة واستخدام الخامات المرسلة (request.Items) ✅✅
+
+            if (request.Items == null || !request.Items.Any())
+            {
+                // لو الفرونت إند مبعتش أي خامات، يبقى فيه مشكلة
+                throw new Exception("Cannot create order. Please specify required raw materials (Items list is empty).");
+            }
+
+            // 3. إضافة الخامات المرسلة مباشرة للأوردر
+            foreach (var item in request.Items)
+            {
+                // ✅ ملاحظة: هنا نفترض أن Quantity المرسلة هي الكمية الإجمالية النهائية
+                //             ولا نحتاج لضربها في كمية الأوردر request.Quantity
+                order.AddOrUpdateItem(item.MaterialId, item.Quantity);
+            }
+
+            // 4. الحفظ
+            await _productionRepository.AddAsync(order);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return order.Id;

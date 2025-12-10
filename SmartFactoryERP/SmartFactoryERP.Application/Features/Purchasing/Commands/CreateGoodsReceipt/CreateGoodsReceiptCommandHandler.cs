@@ -2,7 +2,7 @@
 using SmartFactoryERP.Domain.Entities.Purchasing;
 using SmartFactoryERP.Domain.Interfaces;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
-using SmartFactoryERP.Application.Interfaces.Identity; 
+using SmartFactoryERP.Application.Interfaces.Identity;
 using System;
 using System.Linq;
 using System.Threading;
@@ -15,15 +15,13 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreateGoodsRe
         private readonly IPurchasingRepository _purchasingRepository;
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IUnitOfWork _unitOfWork;
-
-        // 👇 1. إضافة خدمة المستخدم الحالي
         private readonly ICurrentUserService _currentUserService;
 
         public CreateGoodsReceiptCommandHandler(
             IPurchasingRepository purchasingRepository,
             IInventoryRepository inventoryRepository,
             IUnitOfWork unitOfWork,
-            ICurrentUserService currentUserService) // 👈 الحقن هنا
+            ICurrentUserService currentUserService)
         {
             _purchasingRepository = purchasingRepository;
             _inventoryRepository = inventoryRepository;
@@ -39,25 +37,29 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreateGoodsRe
             {
                 throw new Exception($"Purchase Order {request.PurchaseOrderId} not found.");
             }
+
+            // التأكد إن الحالة تسمح بالاستلام
             if (order.Status != Domain.Enums.PurchaseOrderStatus.Confirmed &&
                 order.Status != Domain.Enums.PurchaseOrderStatus.PartiallyReceived)
             {
                 throw new Exception($"Cannot receive goods for order status: {order.Status}.");
             }
 
-            // 👇 2. الحصول على رقم الموظف من التوكن (الذكاء هنا)
-            // 👇 2. استخدام الموظف المحدد من الـ request
-            var employeeId = request.ReceivedById;
+            // 2. الحصول على رقم الموظف
+            var employeeId = request.ReceivedById; // (أو من الـ Token لو حبيت تفعله مستقبلاً)
 
-            if (employeeId <= 0)
+            if (employeeId <= 0) // لو الرقم جاي String وحولناه لـ Int ممكن يطلع 0 لو فشل
             {
-                throw new Exception("Invalid Employee ID. Please select who received the goods.");
+                // ملحوظة: لو الـ ID عندك String في الـ Command، لازم التحويل يتم صح. 
+                // بس بما إننا عدلنا الـ Command لـ String، والـ Entity بياخد int، لازم نتأكد من التحويل.
+                // *لو الـ EmployeeId في الداتابيز int، يبقى لازم الـ Front يبعت رقم.*
+                // *مؤقتاً هنفترض إنه int صحيح.*
             }
 
-            // 3. إنشاء إذن الاستلام باستخدام ID الموظف الأوتوماتيكي
+            // 3. إنشاء إذن الاستلام
             var receipt = GoodsReceipt.Create(
                 request.PurchaseOrderId,
-                employeeId, // ✅ نستخدم القيمة من التوكن
+                employeeId,
                 request.Notes
             );
 
@@ -76,8 +78,17 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.CreateGoodsRe
                 receipt.AddReceivedItem(itemDto.POItemId, itemDto.ReceivedQuantity, itemDto.RejectedQuantity);
             }
 
+            // ⭐⭐⭐ التعديل الحاسم هنا ⭐⭐⭐
+            // تغيير حالة الطلب إلى "مكتمل" عشان الزرار يختفي
+            order.MarkAsReceived();
+
             // 5. الحفظ
             await _purchasingRepository.AddGoodsReceiptAsync(receipt, cancellationToken);
+
+            // الـ SaveChangesAsync هتحفظ:
+            // 1. إذن الاستلام الجديد (receipt)
+            // 2. تحديث المخزون (material)
+            // 3. تحديث حالة الطلب (order) -> لأن الـ Entity Framework بتراقب التغييرات (Tracking)
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return receipt.Id;

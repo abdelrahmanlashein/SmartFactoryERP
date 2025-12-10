@@ -57,5 +57,25 @@ namespace SmartFactoryERP.Persistence.Repositories
                 .OrderByDescending(p => p.CreatedDate) // الأحدث أولاً
                 .ToListAsync(cancellationToken);
         }
+        public async Task<List<BillOfMaterial>> GetBomLinesByProductIdAsync(int productId)
+        {
+            return await _context.BillOfMaterials
+                .Include(b => b.Component) // عشان نجيب اسم الخامة (MaterialName)
+                .Where(b => b.ProductId == productId)
+                .ToListAsync();
+        }
+        public async Task<ProductionOrder> GetOrderWithItemsAsync(int id)
+        {
+            return await _context.ProductionOrders
+                .Include(o => o.Product)        // يجيب تفاصيل المنتج النهائي (اسمه)
+                .Include(o => o.Items)          // ✅ يجيب قائمة الخامات (Items)
+                    .ThenInclude(i => i.Material) // ✅ يجيب اسم الخامة نفسها جوه كل سطر
+                .FirstOrDefaultAsync(o => o.Id == id);
+        }
+        public async Task AddAsync(ProductionOrder order)
+        {
+            await _context.ProductionOrders.AddAsync(order);
+            // لاحظ: SaveChanges بيتعمل في الـ UnitOfWork، فمش محتاجينه هنا
+        }
     }
 }

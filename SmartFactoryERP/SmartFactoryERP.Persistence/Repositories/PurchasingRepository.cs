@@ -41,57 +41,53 @@ namespace SmartFactoryERP.Persistence.Repositories
 
         public async Task<bool> IsSupplierCodeUniqueAsync(string code, CancellationToken cancellationToken)
         {
-            // Returns TRUE if the code does NOT exist (it is unique)
-            // Returns FALSE if the code already exists
             return !await _context.Suppliers.AnyAsync(s => s.SupplierCode == code, cancellationToken);
         }
 
-        // --- Purchase Order Methods (Placeholder for now) ---
+        public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrEmpty(email)) return true;
+            return !await _context.Suppliers.AnyAsync(s => s.Email == email, cancellationToken);
+        }
+
+        // --- Purchase Order Methods ---
 
         public async Task AddPurchaseOrderAsync(PurchaseOrder order, CancellationToken cancellationToken)
         {
             await _context.PurchaseOrders.AddAsync(order, cancellationToken);
         }
 
-        public async Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken)
-        {
-            // لو الإيميل فاضي، اعتبره فريد (لأننا سمحنا بإيميل فارغ في الـ Validator)
-            if (string.IsNullOrEmpty(email)) return true;
-
-            // رجع true لو الإيميل مش موجود في الداتابيز
-            return !await _context.Suppliers.AnyAsync(s => s.Email == email, cancellationToken);
-        }
-        // --- NEW IMPLEMENTATION ---
+        // ✅✅ هذا هو التعديل المهم جداً ✅✅
         public async Task<PurchaseOrder> GetPurchaseOrderWithItemsAsync(int id, CancellationToken cancellationToken)
         {
-            // Use Include() to load the collection of items and the Supplier navigation property
             return await _context.PurchaseOrders
-                .Include(po => po.Items)
-                .Include(po => po.Supplier) // Assuming Supplier is needed for SupplierName in DTO
-                //.AsNoTracking() // For read-only query performance
+                .Include(po => po.Supplier) // عشان نجيب اسم المورد
+                .Include(po => po.Items)    // عشان نجيب قائمة الأصناف
+                    .ThenInclude(i => i.Material) // 👈👈 الإضافة الحاسمة: عشان نجيب اسم وكود المادة داخل كل صنف
                 .FirstOrDefaultAsync(po => po.Id == id, cancellationToken);
         }
-        // --- NEW IMPLEMENTATION ---
+
         public async Task<List<PurchaseOrder>> GetAllPurchaseOrdersAsync(CancellationToken cancellationToken)
         {
-            // Fetch orders and include the Supplier to get the SupplierName for the list DTO
             return await _context.PurchaseOrders
-                .Include(po => po.Supplier) // To get the name for the list
+                .Include(po => po.Supplier)
                 .AsNoTracking()
                 .OrderByDescending(po => po.OrderDate)
                 .ToListAsync(cancellationToken);
         }
+
+        // --- Goods Receipt Methods ---
+
         public async Task AddGoodsReceiptAsync(GoodsReceipt receipt, CancellationToken cancellationToken)
         {
-            // Note: PurchaseOrders property name in DbContext is usually PurchaseOrders or GoodsReceipts
             await _context.GoodsReceipts.AddAsync(receipt, cancellationToken);
         }
+
         public async Task<GoodsReceipt> GetGoodsReceiptWithItemsAsync(int id, CancellationToken cancellationToken)
         {
-            // Use Include() to load the nested collection of items
             return await _context.GoodsReceipts
                 .Include(gr => gr.Items)
-                .AsNoTracking() // For read-only query performance
+                .AsNoTracking()
                 .FirstOrDefaultAsync(gr => gr.Id == id, cancellationToken);
         }
     }

@@ -28,7 +28,7 @@ namespace SmartFactoryERP.Application.Features.Inventory.Queries.GetStockTransac
                 Id = t.Id,
                 TransactionDate = t.TransactionDate,
                 TransactionType = t.TransactionType.ToString(),
-                Quantity = t.Quantity,
+                Quantity = (int)t.Quantity, // Explicit cast from decimal to int
                 ReferenceType = t.ReferenceType.ToString(),
                 Notes = t.Notes
             }).ToList();

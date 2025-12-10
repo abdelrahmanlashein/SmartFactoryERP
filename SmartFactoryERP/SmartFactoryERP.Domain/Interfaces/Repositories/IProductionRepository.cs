@@ -17,5 +17,11 @@ namespace SmartFactoryERP.Domain.Interfaces.Repositories
         Task AddProductionOrderAsync(ProductionOrder order, CancellationToken cancellationToken);
         Task<ProductionOrder> GetProductionOrderByIdAsync(int id, CancellationToken cancellationToken);
         Task<List<ProductionOrder>> GetAllProductionOrdersAsync(CancellationToken cancellationToken);
+        Task<List<BillOfMaterial>> GetBomLinesByProductIdAsync(int productId);
+        // دالة جديدة بتجيب الأوردر + خاماته
+        Task<ProductionOrder> GetOrderWithItemsAsync(int id);
+        Task AddAsync(ProductionOrder order);
+
+
     }
 }

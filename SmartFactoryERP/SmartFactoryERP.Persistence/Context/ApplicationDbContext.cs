@@ -34,7 +34,9 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<WorkTask> WorkTasks { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
-        
+        public DbSet<ProductionOrderItem> ProductionOrderItems { get; set; }
+
+
         // ✅ إضافة جدول RefreshTokens
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         

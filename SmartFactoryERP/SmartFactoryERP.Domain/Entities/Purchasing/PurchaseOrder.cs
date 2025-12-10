@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.Purchasing
 {
-  
     public class PurchaseOrder : BaseAuditableEntity, IAggregateRoot
     {
         public string PONumber { get; private set; }
@@ -17,13 +16,9 @@ namespace SmartFactoryERP.Domain.Entities.Purchasing
         public DateTime ExpectedDeliveryDate { get; private set; }
         public PurchaseOrderStatus Status { get; private set; }
 
-        // المجموع يحسب بناءً على الأصناف
         public decimal TotalAmount => _items.Sum(i => i.TotalPrice);
 
-        // القائمة الداخلية (قابلة للتعديل)
         private readonly List<PurchaseOrderItem> _items = new();
-
-        // القائمة الخارجية (للقراءة فقط)
         public virtual IReadOnlyCollection<PurchaseOrderItem> Items => _items.AsReadOnly();
         public virtual Supplier Supplier { get; private set; }
 
@@ -41,7 +36,6 @@ namespace SmartFactoryERP.Domain.Entities.Purchasing
             };
         }
 
-        // إضافة صنف للطلب
         public void AddItem(int materialId, int quantity, decimal unitPrice)
         {
             if (Status != PurchaseOrderStatus.Draft)
@@ -62,6 +56,18 @@ namespace SmartFactoryERP.Domain.Entities.Purchasing
         {
             if (!_items.Any()) throw new Exception("Cannot confirm empty order.");
             Status = PurchaseOrderStatus.Confirmed;
+        }
+
+        // ✅✅ دي الدالة الجديدة اللي هتقفل الطلب ✅✅
+        public void MarkAsReceived()
+        {
+            // نتأكد إن الطلب كان معتمد أصلاً
+            if (Status != PurchaseOrderStatus.Confirmed)
+            {
+                throw new Exception("Order must be confirmed before receiving.");
+            }
+
+            Status = PurchaseOrderStatus.Completed;
         }
     }
 }

@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartFactoryERP.Application.Features.Production.Commands.CompleteProduction;
 using SmartFactoryERP.Application.Features.Production.Commands.CreateBOM;
 using SmartFactoryERP.Application.Features.Production.Commands.CreateProductionOrder;
 using SmartFactoryERP.Application.Features.Production.Commands.StartProduction;
+using SmartFactoryERP.Application.Features.Production.Queries.GetBomByProductId;
 using SmartFactoryERP.Application.Features.Production.Queries.GetProductionOrderById;
 using SmartFactoryERP.Application.Features.Production.Queries.GetProductionOrders;
+
+using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System.Threading.Tasks;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
@@ -72,7 +76,28 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             await Mediator.Send(new CompleteProductionCommand { Id = id });
             return Ok(new { message = "Production completed successfully" });
         }
-      
+        // ✅ GET: api/v1/production/bom/{productId}
+        // دالة جديدة بتشوف هل المنتج ده ليه وصفة (BOM) ولا لأ
+        [HttpGet("bom/{productId}")]
+        public async Task<IActionResult> GetBomByProductId(int productId)
+        {
+            // 1. نجهز الطلب (Query)
+            var query = new GetBomByProductIdQuery { ProductId = productId };
+
+            // 2. نبعته للـ Handler عبر الـ Mediator
+            var bom = await Mediator.Send(query);
+
+            // 3. لو رجع null يبقى المنتج ده ملوش وصفة لسه
+            if (bom == null)
+            {
+                return NotFound(new { message = "No BOM found for this product. Please define a recipe first." });
+            }
+
+            // 4. لو موجود، نرجع البيانات (200 OK)
+            return Ok(bom);
+        }
+
+
 
         // ✅ DELETE: api/v1/production/orders/{id} - جديد (إلغاء أمر إنتاج)
         //[HttpDelete("orders/{id}")]

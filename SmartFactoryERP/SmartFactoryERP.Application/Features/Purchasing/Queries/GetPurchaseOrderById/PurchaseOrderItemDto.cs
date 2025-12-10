@@ -10,6 +10,8 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Queries.GetPurchaseOrd
     {
         public int Id { get; set; }
         public int MaterialId { get; set; }
+        public string MaterialName { get; set; }
+        public string MaterialCode { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }

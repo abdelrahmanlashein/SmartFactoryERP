@@ -2,17 +2,16 @@
 using SmartFactoryERP.Domain.Interfaces;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Linq; // ضروري لـ Any()
 
 namespace SmartFactoryERP.Application.Features.Production.Commands.StartProduction
 {
     public class StartProductionCommandHandler : IRequestHandler<StartProductionCommand, Unit>
     {
         private readonly IProductionRepository _productionRepository;
-        private readonly IInventoryRepository _inventoryRepository; // نحتاج المخزون لصرف المواد
+        private readonly IInventoryRepository _inventoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public StartProductionCommandHandler(
@@ -27,45 +26,34 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.StartProducti
 
         public async Task<Unit> Handle(StartProductionCommand request, CancellationToken cancellationToken)
         {
-            // 1. جلب أمر الإنتاج
-            var order = await _productionRepository.GetProductionOrderByIdAsync(request.Id, cancellationToken);
+            // 1. جلب أمر الإنتاج مع الخامات (Items)
+            // ✅✅ تم استخدام request.Id ليتطابق مع الـ Command ✅✅
+            var order = await _productionRepository.GetOrderWithItemsAsync(request.Id);
+
             if (order == null)
                 throw new Exception($"Production Order {request.Id} not found.");
 
-            // 2. جلب وصفة التصنيع (BOM) لهذا المنتج
-            // (لنعرف ما هي المواد الخام المطلوبة)
-            var bomItems = await _productionRepository.GetBOMForProductAsync(order.ProductId, cancellationToken);
+            // التأكد من أن الأوردر في حالة تسمح بالبدء
+            if (order.Status != Domain.Enums.ProductionStatus.Planned)
+                throw new Exception($"Cannot start order. Current status is {order.Status}.");
 
-            if (bomItems == null || bomItems.Count == 0)
-                throw new Exception($"No Bill of Materials (Recipe) found for Product ID {order.ProductId}. Cannot produce.");
 
-            // 3. حجز وصرف المواد الخام من المخزون
-            foreach (var bomItem in bomItems)
+            // 2. خصم المواد الخام من المخزون بناءً على الخامات المنسوخة داخل الأوردر (order.Items)
+            if (order.Items == null || !order.Items.Any())
             {
-                // حساب الكمية المطلوبة = (كمية الوصفة للقطعة الواحدة) * (عدد القطع المطلوب إنتاجها)
-                var requiredQuantity = bomItem.Quantity * order.Quantity;
-
-                // جلب المادة الخام من المخزون
-                var material = await _inventoryRepository.GetMaterialByIdAsync(bomItem.ComponentId, cancellationToken);
-                if (material == null)
-                    throw new Exception($"Component Material {bomItem.ComponentId} not found in inventory.");
-
-                // محاولة خصم الكمية (الكيان الذكي سيرمي خطأ لو الرصيد غير كافٍ)
-                try
-                {
-                    // ✅ الآن نمرر decimal مباشرة بدون تحويل
-                    material.DecreaseStock(requiredQuantity);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Insufficient stock for material '{material.MaterialName}'. Required: {requiredQuantity:F2}, Available: {material.CurrentStockLevel:F2}");
-                }
+                throw new Exception($"Order {order.OrderNumber} has no materials defined (BOM is empty). Cannot start production.");
             }
 
-            // 4. تغيير حالة الأمر إلى "Started"
+            foreach (var item in order.Items)
+            {
+                // الخصم يتم هنا (لو الرصيد مش كافي، الدالة دي هترمي Exception من الريبوزيتوري)
+                await _inventoryRepository.DeductStockAsync(item.MaterialId, item.Quantity, cancellationToken);
+            }
+
+            // 3. تغيير حالة الأمر إلى "Started"
             order.StartProduction();
 
-            // 5. حفظ كل التغييرات (تحديث حالة الأمر + خصم أرصدة المواد)
+            // 4. حفظ كل التغييرات (يضمن أن الخصم وحالة الأوردر تحدث في نفس الـ Transaction)
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
