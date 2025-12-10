@@ -4,7 +4,9 @@ using SmartFactoryERP.Application.Features.Sales.Commands.ConfirmSalesOrder;
 using SmartFactoryERP.Application.Features.Sales.Commands.CreateCustomer;
 using SmartFactoryERP.Application.Features.Sales.Commands.CreateSalesOrder;
 using SmartFactoryERP.Application.Features.Sales.Commands.GenerateInvoice;
+using SmartFactoryERP.Application.Features.Sales.Queries.GetAllSalesOrders;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
+using SmartFactoryERP.Domain.Models;
 using SmartFactoryERP.Infrastructure.Services.Pdf;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
@@ -56,6 +58,25 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         //}
         #endregion
 
+        // GET api/v1/sales/orders
+        [HttpGet("orders")]
+        public async Task<IActionResult> GetOrders(CancellationToken cancellationToken)
+        {
+            var orders = await _salesRepository.GetAllSalesOrdersAsync(cancellationToken);
+
+            // تحويل Entity لـ DTO هنا
+            var dtos = orders.Select(so => new
+            {
+                Id = so.Id,
+                OrderNumber = so.OrderNumber,
+                CustomerName = so.Customer?.CustomerName ?? "N/A",
+                OrderDate = so.OrderDate,
+                TotalAmount = so.TotalAmount,
+                Status = so.Status.ToString()
+            }).ToList();
+
+            return Ok(dtos);
+        }
         // POST api/v1/sales/orders/{id}/confirm
         [HttpPost("orders/{id}/confirm")]
         public async Task<IActionResult> ConfirmSalesOrder(int id) //500

@@ -2,7 +2,7 @@
 using SmartFactoryERP.Domain.Entities.Sales;
 using SmartFactoryERP.Domain.Enums;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
-using SmartFactoryERP.Domain.Models.AI; 
+using SmartFactoryERP.Domain.Models.AI;
 using SmartFactoryERP.Persistence.Context;
 using System;
 using System.Collections.Generic;
@@ -81,6 +81,16 @@ namespace SmartFactoryERP.Persistence.Repositories
                 })
                 .OrderBy(x => x.Date)
                 .ToListAsync(token);
+        }
+
+        public async Task<List<SalesOrder>> GetAllSalesOrdersAsync(CancellationToken cancellationToken)
+        {   
+            return await _context.SalesOrders
+                .Include(so => so.Customer)  // ← مهم للحصول على بيانات العميل
+                .Include(so => so.Items)     // ← مهم لحساب TotalAmount
+                .AsNoTracking()
+                .OrderByDescending(so => so.OrderDate)
+                .ToListAsync(cancellationToken);
         }
     }
 }
