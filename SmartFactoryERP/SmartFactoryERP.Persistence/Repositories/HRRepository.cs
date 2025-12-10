@@ -27,7 +27,10 @@ namespace SmartFactoryERP.Persistence.Repositories
 
         public async Task<List<Department>> GetAllDepartmentsAsync(CancellationToken cancellationToken)
         {
-            return await _context.Departments.AsNoTracking().ToListAsync(cancellationToken);
+            return await _context.Departments
+                .Include(d => d.Employees) // ✅ Include employees to get the count
+                .OrderBy(d => d.Name)
+                .ToListAsync(cancellationToken);
         }
 
         public async Task AddEmployeeAsync(Employee employee, CancellationToken cancellationToken)

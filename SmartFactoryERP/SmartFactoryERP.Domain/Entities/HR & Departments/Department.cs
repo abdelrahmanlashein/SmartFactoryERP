@@ -3,20 +3,20 @@ using SmartFactoryERP.Domain.Entities.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Domain.Entities.HR___Departments
 {
     public class Department : BaseEntity
     {
         public string Name { get; private set; }
-        public string Code { get; private set; } // e.g., "SALES", "INV"
+        public string Code { get; private set; }
         public string Description { get; private set; }
 
-        // Navigation Property (قسم واحد -> موظفين كتير)
-        private readonly List<Employee> _employees = new();
-        public virtual IReadOnlyCollection<Employee> Employees => _employees.AsReadOnly();
+        // ✅ خلي الـ backing field private بس مش readonly
+        private List<Employee> _employees = new();
+
+        // ✅ Property للقراءة فقط (DDD Pattern)
+        public IReadOnlyCollection<Employee> Employees => _employees.AsReadOnly();
 
         private Department() { }
 
@@ -29,7 +29,8 @@ namespace SmartFactoryERP.Domain.Entities.HR___Departments
             {
                 Name = name,
                 Code = code.ToUpper(),
-                Description = description
+                Description = description,
+                _employees = new List<Employee>() // ✅ Initialize here
             };
         }
     }
