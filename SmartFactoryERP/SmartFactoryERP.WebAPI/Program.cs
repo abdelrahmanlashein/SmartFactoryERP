@@ -49,8 +49,6 @@ namespace SmartFactoryERP.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddOpenApi();
 
-            builder.Services.AddScoped<IAuthService, AuthService>();
-
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

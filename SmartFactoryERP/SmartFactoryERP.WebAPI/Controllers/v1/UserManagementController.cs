@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using SmartFactoryERP.Application.Features.Identity.Models;
 using SmartFactoryERP.Application.Features.UserManagement.Commands.DeleteUser;
 using SmartFactoryERP.Application.Features.UserManagement.Commands.LockUser;
+using SmartFactoryERP.Application.Features.UserManagement.Commands.RegisterUser;
 using SmartFactoryERP.Application.Features.UserManagement.Commands.UpdateUser;
 using SmartFactoryERP.Application.Features.UserManagement.Queries.GetAllUsers;
 using SmartFactoryERP.Application.Features.UserManagement.Queries.GetUserById;
 using SmartFactoryERP.Application.Interfaces.Identity;
 using SmartFactoryERP.Domain.Common;
-using MediatR;
 
 namespace SmartFactoryERP.WebAPI.Controllers.v1
 {
@@ -24,9 +24,40 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             _authService = authService;
         }
 
-        // GET: api/v1/usermanagement
+        /// <summary>
+        /// Register a new user (Admin/SuperAdmin only)
+        /// </summary>
+        /// <param name="command">User registration details</param>
+        /// <returns>Created user information</returns>
+        [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<RegisterUserResponse>> RegisterUser([FromBody] RegisterUserCommand command)
+        {
+            try
+            {
+                var result = await Mediator.Send(command);
+                return CreatedAtAction(
+                    nameof(GetUserById), 
+                    new { id = result.UserId }, 
+                    result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Get all users with optional filtering
+        /// </summary>
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers(
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<List<UserListDto>>> GetAllUsers(
             [FromQuery] string? searchTerm,
             [FromQuery] string? role,
             [FromQuery] bool? isLocked)
@@ -41,92 +72,208 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(users);
         }
 
-        // GET: api/v1/usermanagement/{id}
+        /// <summary>
+        /// Get user details by ID
+        /// </summary>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserById(string id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<UserDetailsDto>> GetUserById(string id)
         {
-            var query = new GetUserByIdQuery { UserId = id };
-            var user = await Mediator.Send(query);
-            return Ok(user);
+            try
+            {
+                var query = new GetUserByIdQuery { UserId = id };
+                var user = await Mediator.Send(query);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
 
-        // PUT: api/v1/usermanagement/{id}
+        /// <summary>
+        /// Update user information
+        /// </summary>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateUser(string id, [FromBody] UpdateUserCommand command)
         {
+            if (command == null)
+                return BadRequest(new { message = "Invalid request body" });
+
             command.UserId = id;
-            var result = await Mediator.Send(command);
-            return Ok(new { success = result, message = "User updated successfully" });
+            
+            try
+            {
+                var result = await Mediator.Send(command);
+                return Ok(new { success = result, message = "User updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
-        // DELETE: api/v1/usermanagement/{id}
+        /// <summary>
+        /// Delete user (SuperAdmin only)
+        /// </summary>
         [HttpDelete("{id}")]
-        [Authorize(Roles = Roles.SuperAdmin)] // فقط SuperAdmin يمكنه حذف المستخدمين
+        [Authorize(Roles = Roles.SuperAdmin)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var command = new DeleteUserCommand { UserId = id };
-            var result = await Mediator.Send(command);
-            return Ok(new { success = result, message = "User deleted successfully" });
+            try
+            {
+                var command = new DeleteUserCommand { UserId = id };
+                var result = await Mediator.Send(command);
+                return Ok(new { success = result, message = "User deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
 
-        // POST: api/v1/usermanagement/{id}/lock
+        /// <summary>
+        /// Lock user account
+        /// </summary>
         [HttpPost("{id}/lock")]
-        public async Task<IActionResult> LockUser(string id, [FromBody] LockUserCommand command)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> LockUser(string id, [FromBody] LockUserCommand? command)
         {
-            command.UserId = id;
-            var result = await Mediator.Send(command);
-            return Ok(new { success = result, message = "User locked successfully" });
+            try
+            {
+                command ??= new LockUserCommand();
+                command.UserId = id;
+                var result = await Mediator.Send(command);
+                return Ok(new { success = result, message = "User locked successfully" });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
 
-        // POST: api/v1/usermanagement/{id}/unlock
+        /// <summary>
+        /// Unlock user account
+        /// </summary>
         [HttpPost("{id}/unlock")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UnlockUser(string id)
         {
-            var result = await _authService.UnlockAccount(id);
-            return Ok(new { success = result, message = "User unlocked successfully" });
+            try
+            {
+                var result = await _authService.UnlockAccount(id);
+                return Ok(new { success = result, message = "User unlocked successfully" });
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
 
-        // POST: api/v1/usermanagement/{id}/roles/assign
+        /// <summary>
+        /// Assign role to user
+        /// </summary>
         [HttpPost("{id}/roles/assign")]
-        public async Task<IActionResult> AssignRole(string id, [FromBody] AssignRoleRequest request)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<UserRolesResponse>> AssignRole(string id, [FromBody] AssignRoleRequest request)
         {
+            if (request == null)
+                return BadRequest(new { message = "Invalid request body" });
+
             request.UserId = id;
-            var result = await _authService.AssignRoleToUser(request);
-            return Ok(result);
+            
+            try
+            {
+                var result = await _authService.AssignRoleToUser(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
-        // POST: api/v1/usermanagement/{id}/roles/remove
+        /// <summary>
+        /// Remove role from user
+        /// </summary>
         [HttpPost("{id}/roles/remove")]
-        public async Task<IActionResult> RemoveRole(string id, [FromBody] AssignRoleRequest request)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<UserRolesResponse>> RemoveRole(string id, [FromBody] AssignRoleRequest request)
         {
+            if (request == null)
+                return BadRequest(new { message = "Invalid request body" });
+
             request.UserId = id;
-            var result = await _authService.RemoveRoleFromUser(request);
-            return Ok(result);
+            
+            try
+            {
+                var result = await _authService.RemoveRoleFromUser(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
-        // GET: api/v1/usermanagement/{id}/roles
+        /// <summary>
+        /// Get user roles
+        /// </summary>
         [HttpGet("{id}/roles")]
-        public async Task<IActionResult> GetUserRoles(string id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<UserRolesResponse>> GetUserRoles(string id)
         {
-            var result = await _authService.GetUserRoles(id);
-            return Ok(result);
+            try
+            {
+                var result = await _authService.GetUserRoles(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
 
-        // GET: api/v1/usermanagement/roles
+        /// <summary>
+        /// Get all available roles
+        /// </summary>
         [HttpGet("roles")]
-        [AllowAnonymous] // يمكن للجميع رؤية قائمة الأدوار
-        public async Task<IActionResult> GetAllRoles()
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<string>>> GetAllRoles()
         {
             var roles = await _authService.GetAllRoles();
             return Ok(roles);
         }
 
-        // GET: api/v1/usermanagement/{id}/security
+        /// <summary>
+        /// Get account security information
+        /// </summary>
         [HttpGet("{id}/security")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAccountSecurity(string id)
         {
-            var result = await _authService.GetAccountSecurity(id);
-            return Ok(result);
+            try
+            {
+                var result = await _authService.GetAccountSecurity(id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
     }
 }
