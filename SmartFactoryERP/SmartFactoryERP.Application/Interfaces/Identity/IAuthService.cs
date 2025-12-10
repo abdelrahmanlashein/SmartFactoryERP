@@ -20,5 +20,8 @@ namespace SmartFactoryERP.Application.Interfaces.Identity
         Task<bool> ForgotPassword(ForgotPasswordRequest request);
         Task<bool> ResetPassword(ResetPasswordRequest request);
         Task<bool> ConfirmEmail(ConfirmEmailRequest request);
+        
+        // ✅ Resend Confirmation Email (Admin only)
+        Task<bool> ResendConfirmationEmail(string userId);
     }
 }   

@@ -78,6 +78,27 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(new { message = "Email confirmed successfully" });
         }
 
+        // ✅ إعادة إرسال بريد تأكيد الحساب (Admin/SuperAdmin فقط)
+        [HttpPost("resend-confirmation-email/{userId}")]
+        [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ResendConfirmationEmail(string userId)
+        {
+            try
+            {
+                await _authService.ResendConfirmationEmail(userId);
+                return Ok(new { message = "Confirmation email sent successfully" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         // ✅ تغيير كلمة المرور
         [HttpPost("change-password")]
         [Authorize]
@@ -105,7 +126,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // ✅ فك قفل حساب (Admin فقط)
         [HttpPost("unlock-account/{userId}")]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
         public async Task<IActionResult> UnlockAccount(string userId)
         {
             await _authService.UnlockAccount(userId);
@@ -114,7 +135,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // ✅ إسناد صلاحية (Admin فقط)
         [HttpPost("assign-role")]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
         public async Task<IActionResult> AssignRole(AssignRoleRequest request)
         {
             return Ok(await _authService.AssignRoleToUser(request));
@@ -122,7 +143,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
 
         // ✅ إزالة صلاحية (Admin فقط)
         [HttpPost("remove-role")]
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
         public async Task<IActionResult> RemoveRole(AssignRoleRequest request)
         {
             return Ok(await _authService.RemoveRoleFromUser(request));

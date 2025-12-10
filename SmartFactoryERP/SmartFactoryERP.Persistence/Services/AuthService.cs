@@ -518,5 +518,34 @@ namespace SmartFactoryERP.Persistence.Services
 
             return true;
         }
+
+        /// <summary>
+        /// إعادة إرسال بريد تأكيد الحساب (Admin فقط)
+        /// </summary>
+        public async Task<bool> ResendConfirmationEmail(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                throw new Exception($"User with ID {userId} not found");
+
+            // Check if email is already confirmed
+            if (user.EmailConfirmed)
+                throw new Exception("Email is already confirmed");
+
+            // Generate email confirmation token
+            var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            // Send confirmation email
+            try
+            {
+                await _emailService.SendEmailConfirmationAsync(user.Email, confirmationToken, user.FullName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to send confirmation email. Please try again later.");
+            }
+
+            return true;
+        }
     }
 }
