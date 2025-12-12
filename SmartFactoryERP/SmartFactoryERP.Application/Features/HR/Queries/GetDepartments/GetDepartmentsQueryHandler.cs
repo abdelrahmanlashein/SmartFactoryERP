@@ -24,7 +24,7 @@ namespace SmartFactoryERP.Application.Features.HR.Queries.GetDepartments
                 Name = d.Name,
                 Code = d.Code,
                 Description = d.Description,
-                EmployeeCount = d.Employees?.Count ?? 0
+                EmployeeCount = d.Employees?.Count ?? 0 // ✅ Calculate employee count
             }).ToList();
         }
     }

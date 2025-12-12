@@ -32,12 +32,12 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)] 
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<RegisterUserResponse>> RegisterUser([FromBody] RegisterUserCommand command)
         {
             try
-            {
+            { 
                 var result = await Mediator.Send(command);
                 return CreatedAtAction(
                     nameof(GetUserById), 

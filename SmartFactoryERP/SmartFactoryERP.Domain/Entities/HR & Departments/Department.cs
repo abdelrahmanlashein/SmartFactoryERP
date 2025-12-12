@@ -12,10 +12,7 @@ namespace SmartFactoryERP.Domain.Entities.HR___Departments
         public string Code { get; private set; }
         public string Description { get; private set; }
 
-        // ✅ خلي الـ backing field private بس مش readonly
         private List<Employee> _employees = new();
-
-        // ✅ Property للقراءة فقط (DDD Pattern)
         public IReadOnlyCollection<Employee> Employees => _employees.AsReadOnly();
 
         private Department() { }
@@ -30,8 +27,18 @@ namespace SmartFactoryERP.Domain.Entities.HR___Departments
                 Name = name,
                 Code = code.ToUpper(),
                 Description = description,
-                _employees = new List<Employee>() // ✅ Initialize here
+                _employees = new List<Employee>()
             };
+        }
+
+        public void UpdateDetails(string name, string code, string description)
+        {
+            if (string.IsNullOrWhiteSpace(name)) throw new Exception("Department Name is required.");
+            if (string.IsNullOrWhiteSpace(code)) throw new Exception("Department Code is required.");
+
+            Name = name;
+            Code = code.ToUpper();
+            Description = description;
         }
     }
 }
