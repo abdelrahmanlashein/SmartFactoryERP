@@ -13,7 +13,7 @@ namespace SmartFactoryERP.Application.Features.AI.Queries.GetProductForecast
     public class GetProductForecastQueryHandler : IRequestHandler<GetProductForecastQuery, ProductForecastDto>
     {
         private readonly ISalesRepository _salesRepository;
-        private readonly IForecastingService _aiService; // 👈 التعامل مع Interface
+        private readonly IForecastingService _aiService; // working with the forecasting interface
 
         public GetProductForecastQueryHandler(ISalesRepository salesRepo, IForecastingService aiService)
         {
@@ -23,17 +23,17 @@ namespace SmartFactoryERP.Application.Features.AI.Queries.GetProductForecast
 
         public async Task<ProductForecastDto> Handle(GetProductForecastQuery request, CancellationToken token)
         {
-            // 1. هات التاريخ من الداتابيز
+            // 1. Retrieve history from the database
             var history = await _salesRepository.GetSalesHistoryAsync(request.ProductId, token);
 
-            // 2. اطلب التوقع من الـ AI
+            // 2. Request forecast from the AI service
             var result = _aiService.PredictNextMonth(history);
 
-            // 3. جهز الرد
+            // 3. Prepare the response
             return new ProductForecastDto
             {
                 ProductId = request.ProductId,
-                PredictedSalesQuantity = (int)Math.Ceiling(result.PredictedSales), // تقريب لأقرب رقم صحيح
+                PredictedSalesQuantity = (int)Math.Ceiling(result.PredictedSales), // round up to nearest integer
                 Advice = result.PredictedSales > 20 ? "🔥 High demand expected! Stock up." : "📉 Demand is stable."
             };
         }

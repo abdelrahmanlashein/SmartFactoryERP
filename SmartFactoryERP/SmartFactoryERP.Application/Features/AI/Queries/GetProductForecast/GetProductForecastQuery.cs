@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace SmartFactoryERP.Application.Features.AI.Queries.GetProductForecast
 {
-    // هذا الكلاس يمثل "سؤال" نرسله للـ Mediator
-    // ويرجع لنا الإجابة في شكل ProductForecastDto
+    // This class represents the query we send to the Mediator
+    // It returns a ProductForecastDto
     public class GetProductForecastQuery : IRequest<ProductForecastDto>
     {
-        public int ProductId { get; set; } // المنتج اللي عايزين نتوقع مبيعاته
+        public int ProductId { get; set; } // The product for which we want to forecast sales
     }
 }

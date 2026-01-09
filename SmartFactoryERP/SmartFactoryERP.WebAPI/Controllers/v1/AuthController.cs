@@ -18,11 +18,12 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             _authService = authService;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegistrationRequest request)
         {
             return Ok(await _authService.Register(request));
-        }
+        } 
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(AuthRequest request)
@@ -30,7 +31,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(await _authService.Login(request));
         }
 
-        // ✅ تجديد الـ Token
+        // ✅ Refresh token
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
         {
@@ -38,7 +39,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(response);
         }
 
-        // ✅ تسجيل الخروج (إبطال جميع Tokens)
+        // ✅ Logout (revoke all tokens)
         [HttpPost("logout")]
         [Authorize]
         public async Task<IActionResult> Logout()
@@ -51,7 +52,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(new { message = "Logged out successfully" });
         }
 
-        // ✅ نسيت كلمة المرور
+        // ✅ Forgot password
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
         {
@@ -62,7 +63,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             });
         }
 
-        // ✅ إعادة تعيين كلمة المرور
+        // ✅ Reset password
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
         {
@@ -70,7 +71,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(new { message = "Password has been reset successfully. You can now login with your new password." });
         }
 
-        // ✅ تأكيد البريد الإلكتروني
+        // ✅ Confirm email
         [HttpPost("confirm-email")]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailRequest request)
         {
@@ -78,7 +79,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(new { message = "Email confirmed successfully" });
         }
 
-        // ✅ إعادة إرسال بريد تأكيد الحساب (Admin/SuperAdmin فقط)
+        // ✅ Resend confirmation email (Admin/SuperAdmin only)
         [HttpPost("resend-confirmation-email/{userId}")]
         [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -99,7 +100,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             }
         }
 
-        // ✅ تغيير كلمة المرور
+        // ✅ Change password
         [HttpPost("change-password")]
         [Authorize]
         public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
@@ -112,7 +113,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(new { message = "Password changed successfully" });
         }
 
-        // ✅ جلب معلومات أمان الحساب
+        // ✅ Get account security information
         [HttpGet("account-security")]
         [Authorize]
         public async Task<IActionResult> GetAccountSecurity()
@@ -124,7 +125,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(await _authService.GetAccountSecurity(userId));
         }
 
-        // ✅ فك قفل حساب (Admin فقط)
+        // ✅ Unlock account (Admin only)
         [HttpPost("unlock-account/{userId}")]
         [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
         public async Task<IActionResult> UnlockAccount(string userId)
@@ -133,7 +134,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(new { message = "Account unlocked successfully" });
         }
 
-        // ✅ إسناد صلاحية (Admin فقط)
+        // ✅ Assign role (Admin only)
         [HttpPost("assign-role")]
         [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
         public async Task<IActionResult> AssignRole(AssignRoleRequest request)
@@ -141,7 +142,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(await _authService.AssignRoleToUser(request));
         }
 
-        // ✅ إزالة صلاحية (Admin فقط)
+        // ✅ Remove role (Admin only)
         [HttpPost("remove-role")]
         [Authorize(Roles = $"{Roles.SuperAdmin},{Roles.Admin}")]
         public async Task<IActionResult> RemoveRole(AssignRoleRequest request)
@@ -149,7 +150,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(await _authService.RemoveRoleFromUser(request));
         }
 
-        // ✅ جلب صلاحيات مستخدم
+        // ✅ Get user roles
         [HttpGet("user-roles/{userId}")]
         [Authorize]
         public async Task<IActionResult> GetUserRoles(string userId)
@@ -157,7 +158,7 @@ namespace SmartFactoryERP.WebAPI.Controllers.v1
             return Ok(await _authService.GetUserRoles(userId));
         }
 
-        // ✅ جلب جميع الصلاحيات
+        // ✅ Get all roles
         [HttpGet("roles")]
         [Authorize]
         public async Task<IActionResult> GetAllRoles()

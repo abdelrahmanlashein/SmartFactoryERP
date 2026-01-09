@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SmartFactoryERP.Domain.Enums; // للتأكد من الحالة
+using SmartFactoryERP.Domain.Enums; // for checking status
 using SmartFactoryERP.Domain.Interfaces;
 using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System;
@@ -21,7 +21,7 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.ConfirmPurcha
 
         public async Task<Unit> Handle(ConfirmPurchaseOrderCommand request, CancellationToken cancellationToken)
         {
-            // 1. جلب الطلب مع الأصناف (ضروري لأن الـ Domain بيتشيك على الأصناف)
+            // 1. Fetch the purchase order with its items (necessary because Domain checks items)
             var order = await _purchasingRepository.GetPurchaseOrderWithItemsAsync(request.Id, cancellationToken);
 
             if (order == null)
@@ -29,17 +29,17 @@ namespace SmartFactoryERP.Application.Features.Purchasing.Commands.ConfirmPurcha
                 throw new Exception($"Purchase Order with Id {request.Id} was not found.");
             }
 
-            // (Check) لو الطلب أصلاً مؤكد، مفيش داعي نعمل حاجة (Idempotency)
+            // (Check) If the order is already confirmed, do nothing (idempotency)
             if (order.Status == PurchaseOrderStatus.Confirmed)
             {
                 return Unit.Value;
             }
 
-            // 2. تنفيذ منطق البيزنس (تغيير الحالة + التحقق من الأصناف)
-            // هذه الدالة سترمي Exception لو الأصناف فارغة
+            // 2. Execute business logic (change status + validate items)
+            // This method will throw Exception if items are empty
             order.Confirm();
 
-            // 3. ⚠ أهم سطر: حفظ التغييرات في قاعدة البيانات
+            // 3. ⚠ Important: persist changes to the database
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

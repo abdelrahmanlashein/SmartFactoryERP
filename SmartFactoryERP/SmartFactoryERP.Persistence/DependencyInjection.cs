@@ -11,6 +11,7 @@ using SmartFactoryERP.Infrastructure.Services.Pdf;
 using SmartFactoryERP.Persistence.Context;
 using SmartFactoryERP.Persistence.Repositories;
 using SmartFactoryERP.Persistence.Services;
+using System;
 
 namespace SmartFactoryERP.Persistence
 {
@@ -18,8 +19,21 @@ namespace SmartFactoryERP.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionString, sqlOptions =>
+                {
+                    // تفعيل إعادة المحاولة التلقائية عند أخطاء مؤقتة (مثال 40613 = Azure SQL unavailable, 1205 = deadlock)
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: new[] { 40613, 1205 } // ضع null إذا أردت الاعتماد على الافتراضيات
+                    );
+
+                    // زيادة مهلة تنفيذ الأوامر (ثواني)
+                    sqlOptions.CommandTimeout(60);
+                }));
 
             services.AddIdentityCore<ApplicationUser>(options =>
             {

@@ -11,6 +11,6 @@ namespace SmartFactoryERP.Application.Features.Identity.Models
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int? EmployeeId { get; set; } // لربط الحساب بموظف
+        public int? EmployeeId { get; set; } // To link the account to an employee
     }
 }

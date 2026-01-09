@@ -22,7 +22,7 @@ namespace SmartFactoryERP.Persistence.Repositories
 
         public async Task<Attendance> GetActiveAttendanceByEmployeeIdAsync(int employeeId, DateTime date, CancellationToken token)
         {
-            // يبحث عن سجل دخول اليوم ولم يتم تسجيل الخروج له بعد
+            // Searches for today's check-in record that does not have a checkout time yet
             return await _context.Attendances
                 .FirstOrDefaultAsync(a => a.EmployeeId == employeeId && a.Date == date && a.CheckOutTime == null, token);
         }

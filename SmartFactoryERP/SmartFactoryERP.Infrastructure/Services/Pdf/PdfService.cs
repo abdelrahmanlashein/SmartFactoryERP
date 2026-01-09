@@ -10,7 +10,7 @@ namespace SmartFactoryERP.Infrastructure.Services.Pdf
     {
         public byte[] GenerateInvoicePdf(Invoice invoice)
         {
-            // 👇 1. التحديد الصريح للكلاس لتجنب التضارب
+            // 1. Explicitly reference the class to avoid name collisions
             var document = QuestPDF.Fluent.Document.Create(container =>
             {
                 container.Page(page =>
@@ -88,7 +88,7 @@ namespace SmartFactoryERP.Infrastructure.Services.Pdf
             return document.GeneratePdf();
         }
 
-        // 👇 2. نقل دالة التنسيق لتكون دالة منفصلة ونظيفة
+        // 2. Move the cell styling into a separate clean helper method
         private static IContainer CellStyle(IContainer container)
         {
             return container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);

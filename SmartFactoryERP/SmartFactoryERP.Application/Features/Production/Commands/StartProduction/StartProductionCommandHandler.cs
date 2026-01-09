@@ -4,7 +4,7 @@ using SmartFactoryERP.Domain.Interfaces.Repositories;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq; // ضروري لـ Any()
+using System.Linq; // required for Any()
 
 namespace SmartFactoryERP.Application.Features.Production.Commands.StartProduction
 {
@@ -26,19 +26,18 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.StartProducti
 
         public async Task<Unit> Handle(StartProductionCommand request, CancellationToken cancellationToken)
         {
-            // 1. جلب أمر الإنتاج مع الخامات (Items)
-            // ✅✅ تم استخدام request.Id ليتطابق مع الـ Command ✅✅
+            // 1. Fetch the production order with its items
+            // ✅✅ Using request.Id to match the command ✅✅
             var order = await _productionRepository.GetOrderWithItemsAsync(request.Id);
 
             if (order == null)
                 throw new Exception($"Production Order {request.Id} not found.");
 
-            // التأكد من أن الأوردر في حالة تسمح بالبدء
+            // Ensure the order is in a status that allows starting
             if (order.Status != Domain.Enums.ProductionStatus.Planned)
                 throw new Exception($"Cannot start order. Current status is {order.Status}.");
 
-
-            // 2. خصم المواد الخام من المخزون بناءً على الخامات المنسوخة داخل الأوردر (order.Items)
+            // 2. Deduct raw materials from inventory based on the order's items
             if (order.Items == null || !order.Items.Any())
             {
                 throw new Exception($"Order {order.OrderNumber} has no materials defined (BOM is empty). Cannot start production.");
@@ -46,14 +45,14 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.StartProducti
 
             foreach (var item in order.Items)
             {
-                // الخصم يتم هنا (لو الرصيد مش كافي، الدالة دي هترمي Exception من الريبوزيتوري)
+                // Deduction happens here (if balance is insufficient, repository will throw)
                 await _inventoryRepository.DeductStockAsync(item.MaterialId, item.Quantity, cancellationToken);
             }
 
-            // 3. تغيير حالة الأمر إلى "Started"
+            // 3. Change order status to "Started"
             order.StartProduction();
 
-            // 4. حفظ كل التغييرات (يضمن أن الخصم وحالة الأوردر تحدث في نفس الـ Transaction)
+            // 4. Save all changes (ensures deduction and order status update are in same transaction)
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

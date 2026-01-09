@@ -10,7 +10,7 @@ namespace SmartFactoryERP.Application.Features.Inventory.Commands.AdjustStock
     public class AdjustStockCommand : IRequest<Unit>
     {
         public int MaterialId { get; set; }
-        public int Quantity { get; set; } // موجب للإضافة، سالب للخصم
+        public int Quantity { get; set; } // Positive to add, negative to subtract
         public string Notes { get; set; }
     }
 }

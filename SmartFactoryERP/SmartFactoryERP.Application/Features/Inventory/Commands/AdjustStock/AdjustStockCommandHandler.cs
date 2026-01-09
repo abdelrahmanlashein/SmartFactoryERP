@@ -23,38 +23,38 @@ namespace SmartFactoryERP.Application.Features.Inventory.Commands.AdjustStock
 
         public async Task<Unit> Handle(AdjustStockCommand request, CancellationToken cancellationToken)
         {
-            // 1. جلب الكيان (المادة)
+            // 1. Retrieve the entity (material)
             var material = await _inventoryRepository.GetMaterialByIdAsync(request.MaterialId, cancellationToken);
             if (material == null)
             {
                 throw new Exception($"Material with Id {request.MaterialId} was not found.");
             }
 
-            // 2. استدعاء "سلوك" الـ Domain لتعديل الرصيد
+            // 2. Call domain behavior to adjust the stock
             if (request.Quantity > 0)
             {
                 material.IncreaseStock(request.Quantity);
             }
             else
             {
-                // request.Quantity هنا سالبة، نحولها لموجب للخصم
+                // request.Quantity is negative here, convert to positive for deduction
                 material.DecreaseStock(Math.Abs(request.Quantity));
             }
 
-            // 3. إنشاء "حركة مخزون" لتوثيق العملية
+            // 3. Create a stock transaction to record the operation
             var transaction = StockTransaction.Create(
                 request.MaterialId,
-                TransactionType.Adjustment, // نوع الحركة: تسوية
+                TransactionType.Adjustment, // transaction type: adjustment
                 request.Quantity,
-                ReferenceType.ManualAdjustment, // المرجع: تسوية يدوية
-                null, // لا يوجد ID مرجعي
+                ReferenceType.ManualAdjustment, // reference: manual adjustment
+                null, // no reference id
                 request.Notes
             );
 
-            // 4. إضافة الحركة إلى الـ Repository
+            // 4. Add the transaction to the repository
             await _inventoryRepository.AddStockTransactionAsync(transaction, cancellationToken);
 
-            // 5. حفظ كل التغييرات (تعديل الرصيد + إضافة الحركة) في "ترانزكشن" واحدة
+            // 5. Save all changes (stock change + transaction) in a single transaction
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

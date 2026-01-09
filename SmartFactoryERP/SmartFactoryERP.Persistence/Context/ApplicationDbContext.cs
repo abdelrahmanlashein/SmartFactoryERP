@@ -37,7 +37,7 @@ namespace SmartFactoryERP.Persistence.Context
         public DbSet<ProductionOrderItem> ProductionOrderItems { get; set; }
 
 
-        // ✅ إضافة جدول RefreshTokens
+        // ✅ Add RefreshTokens table
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -49,7 +49,7 @@ namespace SmartFactoryERP.Persistence.Context
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             
-            // ✅ تكوين جدول RefreshTokens
+            // ✅ Configure RefreshTokens table
             modelBuilder.Entity<RefreshToken>(entity =>
             {
                 entity.ToTable("RefreshTokens", "Identity");
@@ -58,7 +58,7 @@ namespace SmartFactoryERP.Persistence.Context
                 entity.Property(rt => rt.JwtId).IsRequired().HasMaxLength(500);
                 entity.HasIndex(rt => rt.Token).IsUnique();
                 
-                // العلاقة مع ApplicationUser
+                // Relationship with ApplicationUser
                 entity.HasOne(rt => rt.User)
                       .WithMany()
                       .HasForeignKey(rt => rt.UserId)

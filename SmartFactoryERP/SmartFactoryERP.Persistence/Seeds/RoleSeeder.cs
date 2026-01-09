@@ -4,7 +4,7 @@ using SmartFactoryERP.Domain.Common;
 namespace SmartFactoryERP.Persistence.Seeds
 {
     /// <summary>
-    /// ≈‰‘«¡ «·’·«ÕÌ«  «·√”«”Ì… ›Ì ﬁ«⁄œ… «·»Ì«‰« 
+    /// Seed roles into the database
     /// </summary>
     public static class RoleSeeder
     {

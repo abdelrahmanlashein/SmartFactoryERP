@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic; // ✅ ضروري لقائمة الخامات
+using System.Collections.Generic; // required for list of materials
 using MediatR;
 
 namespace SmartFactoryERP.Application.Features.Production.Commands.CreateProductionOrder
@@ -12,16 +12,16 @@ namespace SmartFactoryERP.Application.Features.Production.Commands.CreateProduct
         public string Notes { get; set; }
         public string Priority { get; set; }
 
-        // ✅✅ الإضافة الجديدة: قائمة الخامات التي أدخلها المستخدم ✅✅
+        // New addition: list of materials entered by the user
         public List<OrderItemInputDto> Items { get; set; }
 
     }
 
-    // ✅✅ DTO للخامة الواحدة المرسلة في الـ Command ✅✅
+    // DTO for a single material sent in the command
     public class OrderItemInputDto
     {
         public int MaterialId { get; set; }
-        // الكمية المطلوبة النهائية (quantity of raw material needed)
+        // Final required quantity (quantity of raw material needed)
         public decimal Quantity { get; set; }
     }
 }

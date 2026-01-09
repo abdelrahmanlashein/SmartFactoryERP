@@ -13,11 +13,11 @@ namespace SmartFactoryERP.Domain.Entities.HR___Departments
     public class Attendance : BaseEntity
     {
         public int EmployeeId { get; private set; }
-        public DateTime Date { get; private set; } // تاريخ اليوم (بدون وقت)
+        public DateTime Date { get; private set; } // Date of the day (without time)
         public DateTime? CheckInTime { get; private set; }
         public DateTime? CheckOutTime { get; private set; }
 
-        // خاصية محسوبة: هل هو متواجد الآن؟
+        // Computed property: is the employee currently present?
         public bool IsPresent => CheckInTime.HasValue && !CheckOutTime.HasValue;
 
         // Navigation
@@ -25,7 +25,7 @@ namespace SmartFactoryERP.Domain.Entities.HR___Departments
 
         private Attendance() { }
 
-        // تسجيل دخول
+        // Check-in
         public static Attendance CreateCheckIn(int employeeId)
         {
             return new Attendance
@@ -36,7 +36,7 @@ namespace SmartFactoryERP.Domain.Entities.HR___Departments
             };
         }
 
-        // تسجيل خروج
+        // Check-out
         public void CheckOut()
         {
             if (CheckOutTime.HasValue)
